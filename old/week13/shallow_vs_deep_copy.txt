@@ -1,0 +1,24 @@
+The list() constructor definitely makes only a shallow copy.  The previous test is correct.  You can also try something like the code below to illustrate the point:
+
+A = ['A', 'B']
+C = ['C', 'D']
+L = [A, C]
+M = list(L)
+A[1] = 'A'
+print M
+
+M: [['A', 'A'], ['C', 'D']]
+
+If you really want a deep copy, either write your own function or import a library, as follows:
+A = ['A', 'B']
+C = ['C', 'D']
+L = [A, C]
+M = list(L)
+from copy import deepcopy
+N = deepcopy(L)
+A[1] = 'A'
+print M
+print N
+
+M: [['A', 'A'], ['C', 'D']]
+N: [['A', 'B'], ['C', 'D']]

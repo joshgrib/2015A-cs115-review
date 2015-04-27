@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>Conway's Game of Life</title>
+  <link rel="stylesheet" type="text/css" href="/styles.css" />
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico" />
+  <script type="text/javascript" src="/js/popup.js"></script>
+  <script type="text/javascript" src="/js/linkclasses.js"></script>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="Author" content="Brian S. Borowski" />
+  <meta name="keywords" content="Game of Life, Conway, Java, applet, demo, cellular automata" />
+</head>
+
+<body onload="setLinkClasses('linkSoftware:active,linkGameOfLife:active')">
+<div id="wrap">
+  <div id="header">
+    <h1>Brian's Project Gallery</h1>
+    <h2>A Collection of Software, Photography, and Music</h2>
+  </div>
+  <div id="nav">
+    <ul>
+      <li><a id="linkHome" href="/">Home Page</a></li>
+      <li><a id="linkSoftware" href="/software/" title="Software Projects">Software Projects</a></li>
+      <li><a id="linkPhotography" href="/photography/" title="Photography">Photography</a></li>
+      <li><a id="linkMusic" href="/music/" title="Music">Music</a></li>
+      <li><a id="linkGuestbook" href="/guestbook/" title="Guestbook">Guestbook</a></li>
+    </ul>
+    <br class="clearit" />
+  </div>
+  <div id="content">
+    <div id="workarea">
+      <h4>Conway's Game of Life</h4>
+      <div style="float: right; text-align: center; padding: 5px"><img src="LifeBoard.gif" width="241" height="241" alt="Game of Life playing field" title="Game of Life playing field" /><br /><i>The Game of Life playing field.</i></div>
+      <p id="topparagraph">The Game of Life introduced by British mathematician John H. Conway in 1970, is really a simulation, not a game with players. It takes place on an unbounded (or bounded, as in this applet) rectangular grid in which each cell can either be occupied by an organism or not. Occupied cells are alive, unoccupied cells are dead. Which cells are alive changes from generation to generation according to the number of neighboring cells that are alive, as defined by the transition rules below.</p><br />
+      <p id="centerparagraph">
+        <object type="application/x-java-applet" width="190" height="38">
+          <param name="archive" value="GameOfLife.jar" />
+          <param name="code" value="ApplicationStarter.class" />
+          <param name="background" value="#FFFFFF" />
+        </object>
+      </p>
+      Game definitions and transition rules are taken from Robert L. Kruse and Alexander J. Ryba's <i>Data Structures and Program Design in C++</i>, Prentice-Hall, Inc., 1999, pp. 5, 33.
+      <div class="clearit"></div>
+      <br />
+      <h4>Transition Rules</h4>
+      <ul class="openspace">
+        <li>The neighbors of a given cell are the eight cells that touch it vertically, horizontally, or diagonally.</li>
+        <li>If a cell is alive but either has no neighboring cells alive or only one alive, then in the next generation the cell dies of loneliness.</li>
+        <li>If a cell is alive and has four or more neighboring cells also alive, then in the next generation the cell dies of overcrowding.</li>
+        <li>A living cell with either two or three living neighbors remains alive in the next generation.</li>
+        <li>If a cell is dead, then in the next generation it will become alive if it has exactly three neighboring cells, no more or fewer, that are already alive. All other dead cells remain dead in the next generation.</li>
+        <li>All births and deaths take place at exactly the same time, so that dying cells can help to give birth to another, but cannot prevent the death of others by reducing overcrowding, nor can cells being born either preserve or kill cells in the previous generation.</li>
+      </ul>
+      <hr />
+      <br />
+      <div id="sourcenav" style="width: 178px">
+        <p>Source Code</p>
+        <ul>
+          <li><a href="AboutDialog.java" onclick="launchCenter('AboutDialog.java', 'AboutDialog', 455, 800); return false">AboutDialog.java</a></li>
+          <li><a href="Application.java" onclick="launchCenter('Application.java', 'Application', 455, 800); return false">Application.java</a></li>
+          <li><a href="ApplicationStarter.java" onclick="launchCenter('ApplicationStarter.java', 'ApplicationStarter', 455, 800); return false">ApplicationStarter.java</a></li>
+          <li><a href="ConfigurationManager.java" onclick="launchCenter('ConfigurationManager.java', 'ConfigurationManager', 455, 800); return false">ConfigurationManager.java</a></li>
+          <li><a href="GUI.java" onclick="launchCenter('GUI.java', 'GUI', 455, 800); return false">GUI.java</a></li>
+          <li><a href="ImagePanel.java" onclick="launchCenter('ImagePanel.java', 'ImagePanel', 455, 800); return false">ImagePanel.java</a></li>
+          <li><a href="LifeBoard.java" onclick="launchCenter('LifeBoard.java', 'LifeBoard', 455, 800); return false">LifeBoard.java</a></li>
+          <li><a href="MessageBox.java" onclick="launchCenter('MessageBox.java', 'MessageBox', 455, 800); return false">MessageBox.java</a></li>
+        </ul>
+      </div>
+      <br />
+    </div>
+    <div id="subnav">
+      <p>Java</p>
+      <ul>
+        <li><a id="linkPuzzle" href="/software/puzzle/">8/15-Puzzle</a></li>
+        <li><a id="linkConnectFour" href="/software/connectfour/">Connect Four</a></li>
+        <li><a id="linkDiscreteFFT" href="/software/fft/">Discrete FFT</a></li>
+        <li><a id="linkGameOfLife" href="/software/life/">Game of Life</a></li>
+        <li><a id="linkGuessingGame" href="/software/guess/">Guessing Game</a></li>
+        <li><a id="linkMatrix" href="/software/matrix/">Matrix Multiplier</a></li>
+        <li><a id="linkClickLife" href="/software/clicklife/">Meaning of Life</a></li>
+        <li><a id="linkSortingDemo" href="/software/sorting/">Sorting Demo</a></li>
+        <li><a id="linkSpaceWarz" href="/software/spacewarz/">Space Warz</a></li>
+        <li><a id="linkTickerTape" href="/software/ticker/">Ticker Tape</a></li>
+        <li><a id="linkTruthTableConstructor" href="/software/truth/">Truth Tables</a></li>
+        <li><a id="linkWythoffsNim" href="/software/wythoff/">Wythoff's Nim</a></li>
+      </ul>
+      <p>JavaScript</p>
+      <ul>
+        <li><a id="linkMagicSquare" href="/software/magicsquare/">Magic Square</a></li>
+        <li><a id="linkNQueens" href="/software/nqueens/">N-Queens</a></li>
+      </ul>
+    </div>
+    <div class="clearit"></div>
+    <div id="footer">
+      <p id="footer_p">Oracle and Java are registered trademarks of Oracle and/or its affiliates.<br />Last modified on September 3, 2012.<br />&copy; 1999-2002, 2012 Brian S. Borowski. All Rights Reserved.</p>
+    </div>
+  </div>
+</div>
+</body>
+</html>
