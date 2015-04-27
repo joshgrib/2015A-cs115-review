@@ -1,15 +1,15 @@
 # cs115
 CS 115 - Intro to Computer Science, python course at Stevens
 
-###hw
+###/hw
 
 All the homeworks for the class
 
-###labs
+###/labs
 
 All the labs for the class
 
-###old
+###/old
 
 All the files from Spring 2015
 
