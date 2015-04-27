@@ -1,6 +1,5 @@
 '''
 Created on Jan 27, 2015
-
 @author: Brian Borowski
 
 CS115 - Functions returning functions
