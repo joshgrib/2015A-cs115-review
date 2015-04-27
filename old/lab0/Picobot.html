@@ -1,0 +1,1232 @@
+
+<!-- saved from url=(0030)http://www.cs.hmc.edu/picobot/ -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+
+<title>Picobot</title>
+</head>
+
+<body body="" bgcolor="#e1e1e1">
+
+<script type="text/javascript" src="./Picobot_files/picobotmaps.js"></script>
+
+<!-- create the new drawing canvas  -->
+<table border="0">
+
+<tbody>
+<tr>
+
+	<td>
+		<!-- Here, we build the board! Using sexy javascript! -->
+		<script language="JavaScript" type="text/javascript">
+
+			
+			/////////////////////////////////////////////////////////////////////////////////////////////
+			// Some horrible browsers do not support the javascript map function, so we add it back in!//
+			/////////////////////////////////////////////////////////////////////////////////////////////
+			if (!Array.prototype.map)
+			{
+				Array.prototype.map = function(fun /*, thisp*/)
+				{
+					var len = this.length;
+					if (typeof fun != "function")
+						throw new TypeError();
+
+					var res = new Array(len);
+					var thisp = arguments[1];
+					for (var i = 0; i < len; i++)
+					{
+						if (i in this)
+							res[i] = fun.call(thisp, this[i], i, this);
+					}
+
+					return res;
+				};
+			}
+			/////////////////////////////////////////////////////////////////////////////////////////////
+			/////////////////////////////////////////////////////////////////////////////////////////////
+			
+			var rows = 25
+			var cols = 25
+			var len = 20
+			
+			document.write('<div id="myCanvas" style="position: relative; height: '+rows*len+'px; width: '+cols*len+'px; top: 0px; left: 0px;">');
+			for (var i=0;i<rows;i++)
+			{
+				for (var j=0;j<cols;j++)
+				{
+					document.write('<div id="r' + i + 'c' + j + '" style="position:absolute; top:' +len*i+ 'px; left:' +len*j+ 'px; width:' +len+ 'px; height:' +len+ 'px; background-color:white;" onmousedown="toggle_wall('+i+','+j+');"><\/div>');
+				}
+			}
+			document.write('<\/div>');
+			
+		</script><div id="myCanvas" style="position: relative; height: 500px; width: 500px; top: 0px; left: 0px;"><div id="r0c0" style="position: absolute; top: 0px; left: 0px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(0,0);"></div><div id="r0c1" style="position: absolute; top: 0px; left: 20px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(0,1);"></div><div id="r0c2" style="position: absolute; top: 0px; left: 40px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(0,2);"></div><div id="r0c3" style="position: absolute; top: 0px; left: 60px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(0,3);"></div><div id="r0c4" style="position: absolute; top: 0px; left: 80px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(0,4);"></div><div id="r0c5" style="position: absolute; top: 0px; left: 100px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(0,5);"></div><div id="r0c6" style="position: absolute; top: 0px; left: 120px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(0,6);"></div><div id="r0c7" style="position: absolute; top: 0px; left: 140px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(0,7);"></div><div id="r0c8" style="position: absolute; top: 0px; left: 160px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(0,8);"></div><div id="r0c9" style="position: absolute; top: 0px; left: 180px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(0,9);"></div><div id="r0c10" style="position: absolute; top: 0px; left: 200px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(0,10);"></div><div id="r0c11" style="position: absolute; top: 0px; left: 220px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(0,11);"></div><div id="r0c12" style="position: absolute; top: 0px; left: 240px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(0,12);"></div><div id="r0c13" style="position: absolute; top: 0px; left: 260px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(0,13);"></div><div id="r0c14" style="position: absolute; top: 0px; left: 280px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(0,14);"></div><div id="r0c15" style="position: absolute; top: 0px; left: 300px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(0,15);"></div><div id="r0c16" style="position: absolute; top: 0px; left: 320px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(0,16);"></div><div id="r0c17" style="position: absolute; top: 0px; left: 340px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(0,17);"></div><div id="r0c18" style="position: absolute; top: 0px; left: 360px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(0,18);"></div><div id="r0c19" style="position: absolute; top: 0px; left: 380px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(0,19);"></div><div id="r0c20" style="position: absolute; top: 0px; left: 400px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(0,20);"></div><div id="r0c21" style="position: absolute; top: 0px; left: 420px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(0,21);"></div><div id="r0c22" style="position: absolute; top: 0px; left: 440px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(0,22);"></div><div id="r0c23" style="position: absolute; top: 0px; left: 460px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(0,23);"></div><div id="r0c24" style="position: absolute; top: 0px; left: 480px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(0,24);"></div><div id="r1c0" style="position: absolute; top: 20px; left: 0px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(1,0);"></div><div id="r1c1" style="position: absolute; top: 20px; left: 20px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(1,1);"></div><div id="r1c2" style="position: absolute; top: 20px; left: 40px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(1,2);"></div><div id="r1c3" style="position: absolute; top: 20px; left: 60px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(1,3);"></div><div id="r1c4" style="position: absolute; top: 20px; left: 80px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(1,4);"></div><div id="r1c5" style="position: absolute; top: 20px; left: 100px; width: 20px; height: 20px; background-color: lime;" onmousedown="toggle_wall(1,5);"></div><div id="r1c6" style="position: absolute; top: 20px; left: 120px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(1,6);"></div><div id="r1c7" style="position: absolute; top: 20px; left: 140px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(1,7);"></div><div id="r1c8" style="position: absolute; top: 20px; left: 160px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(1,8);"></div><div id="r1c9" style="position: absolute; top: 20px; left: 180px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(1,9);"></div><div id="r1c10" style="position: absolute; top: 20px; left: 200px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(1,10);"></div><div id="r1c11" style="position: absolute; top: 20px; left: 220px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(1,11);"></div><div id="r1c12" style="position: absolute; top: 20px; left: 240px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(1,12);"></div><div id="r1c13" style="position: absolute; top: 20px; left: 260px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(1,13);"></div><div id="r1c14" style="position: absolute; top: 20px; left: 280px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(1,14);"></div><div id="r1c15" style="position: absolute; top: 20px; left: 300px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(1,15);"></div><div id="r1c16" style="position: absolute; top: 20px; left: 320px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(1,16);"></div><div id="r1c17" style="position: absolute; top: 20px; left: 340px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(1,17);"></div><div id="r1c18" style="position: absolute; top: 20px; left: 360px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(1,18);"></div><div id="r1c19" style="position: absolute; top: 20px; left: 380px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(1,19);"></div><div id="r1c20" style="position: absolute; top: 20px; left: 400px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(1,20);"></div><div id="r1c21" style="position: absolute; top: 20px; left: 420px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(1,21);"></div><div id="r1c22" style="position: absolute; top: 20px; left: 440px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(1,22);"></div><div id="r1c23" style="position: absolute; top: 20px; left: 460px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(1,23);"></div><div id="r1c24" style="position: absolute; top: 20px; left: 480px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(1,24);"></div><div id="r2c0" style="position: absolute; top: 40px; left: 0px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(2,0);"></div><div id="r2c1" style="position: absolute; top: 40px; left: 20px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(2,1);"></div><div id="r2c2" style="position: absolute; top: 40px; left: 40px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(2,2);"></div><div id="r2c3" style="position: absolute; top: 40px; left: 60px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(2,3);"></div><div id="r2c4" style="position: absolute; top: 40px; left: 80px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(2,4);"></div><div id="r2c5" style="position: absolute; top: 40px; left: 100px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(2,5);"></div><div id="r2c6" style="position: absolute; top: 40px; left: 120px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(2,6);"></div><div id="r2c7" style="position: absolute; top: 40px; left: 140px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(2,7);"></div><div id="r2c8" style="position: absolute; top: 40px; left: 160px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(2,8);"></div><div id="r2c9" style="position: absolute; top: 40px; left: 180px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(2,9);"></div><div id="r2c10" style="position: absolute; top: 40px; left: 200px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(2,10);"></div><div id="r2c11" style="position: absolute; top: 40px; left: 220px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(2,11);"></div><div id="r2c12" style="position: absolute; top: 40px; left: 240px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(2,12);"></div><div id="r2c13" style="position: absolute; top: 40px; left: 260px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(2,13);"></div><div id="r2c14" style="position: absolute; top: 40px; left: 280px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(2,14);"></div><div id="r2c15" style="position: absolute; top: 40px; left: 300px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(2,15);"></div><div id="r2c16" style="position: absolute; top: 40px; left: 320px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(2,16);"></div><div id="r2c17" style="position: absolute; top: 40px; left: 340px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(2,17);"></div><div id="r2c18" style="position: absolute; top: 40px; left: 360px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(2,18);"></div><div id="r2c19" style="position: absolute; top: 40px; left: 380px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(2,19);"></div><div id="r2c20" style="position: absolute; top: 40px; left: 400px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(2,20);"></div><div id="r2c21" style="position: absolute; top: 40px; left: 420px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(2,21);"></div><div id="r2c22" style="position: absolute; top: 40px; left: 440px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(2,22);"></div><div id="r2c23" style="position: absolute; top: 40px; left: 460px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(2,23);"></div><div id="r2c24" style="position: absolute; top: 40px; left: 480px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(2,24);"></div><div id="r3c0" style="position: absolute; top: 60px; left: 0px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(3,0);"></div><div id="r3c1" style="position: absolute; top: 60px; left: 20px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(3,1);"></div><div id="r3c2" style="position: absolute; top: 60px; left: 40px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(3,2);"></div><div id="r3c3" style="position: absolute; top: 60px; left: 60px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(3,3);"></div><div id="r3c4" style="position: absolute; top: 60px; left: 80px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(3,4);"></div><div id="r3c5" style="position: absolute; top: 60px; left: 100px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(3,5);"></div><div id="r3c6" style="position: absolute; top: 60px; left: 120px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(3,6);"></div><div id="r3c7" style="position: absolute; top: 60px; left: 140px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(3,7);"></div><div id="r3c8" style="position: absolute; top: 60px; left: 160px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(3,8);"></div><div id="r3c9" style="position: absolute; top: 60px; left: 180px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(3,9);"></div><div id="r3c10" style="position: absolute; top: 60px; left: 200px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(3,10);"></div><div id="r3c11" style="position: absolute; top: 60px; left: 220px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(3,11);"></div><div id="r3c12" style="position: absolute; top: 60px; left: 240px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(3,12);"></div><div id="r3c13" style="position: absolute; top: 60px; left: 260px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(3,13);"></div><div id="r3c14" style="position: absolute; top: 60px; left: 280px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(3,14);"></div><div id="r3c15" style="position: absolute; top: 60px; left: 300px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(3,15);"></div><div id="r3c16" style="position: absolute; top: 60px; left: 320px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(3,16);"></div><div id="r3c17" style="position: absolute; top: 60px; left: 340px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(3,17);"></div><div id="r3c18" style="position: absolute; top: 60px; left: 360px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(3,18);"></div><div id="r3c19" style="position: absolute; top: 60px; left: 380px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(3,19);"></div><div id="r3c20" style="position: absolute; top: 60px; left: 400px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(3,20);"></div><div id="r3c21" style="position: absolute; top: 60px; left: 420px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(3,21);"></div><div id="r3c22" style="position: absolute; top: 60px; left: 440px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(3,22);"></div><div id="r3c23" style="position: absolute; top: 60px; left: 460px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(3,23);"></div><div id="r3c24" style="position: absolute; top: 60px; left: 480px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(3,24);"></div><div id="r4c0" style="position: absolute; top: 80px; left: 0px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(4,0);"></div><div id="r4c1" style="position: absolute; top: 80px; left: 20px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(4,1);"></div><div id="r4c2" style="position: absolute; top: 80px; left: 40px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(4,2);"></div><div id="r4c3" style="position: absolute; top: 80px; left: 60px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(4,3);"></div><div id="r4c4" style="position: absolute; top: 80px; left: 80px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(4,4);"></div><div id="r4c5" style="position: absolute; top: 80px; left: 100px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(4,5);"></div><div id="r4c6" style="position: absolute; top: 80px; left: 120px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(4,6);"></div><div id="r4c7" style="position: absolute; top: 80px; left: 140px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(4,7);"></div><div id="r4c8" style="position: absolute; top: 80px; left: 160px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(4,8);"></div><div id="r4c9" style="position: absolute; top: 80px; left: 180px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(4,9);"></div><div id="r4c10" style="position: absolute; top: 80px; left: 200px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(4,10);"></div><div id="r4c11" style="position: absolute; top: 80px; left: 220px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(4,11);"></div><div id="r4c12" style="position: absolute; top: 80px; left: 240px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(4,12);"></div><div id="r4c13" style="position: absolute; top: 80px; left: 260px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(4,13);"></div><div id="r4c14" style="position: absolute; top: 80px; left: 280px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(4,14);"></div><div id="r4c15" style="position: absolute; top: 80px; left: 300px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(4,15);"></div><div id="r4c16" style="position: absolute; top: 80px; left: 320px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(4,16);"></div><div id="r4c17" style="position: absolute; top: 80px; left: 340px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(4,17);"></div><div id="r4c18" style="position: absolute; top: 80px; left: 360px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(4,18);"></div><div id="r4c19" style="position: absolute; top: 80px; left: 380px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(4,19);"></div><div id="r4c20" style="position: absolute; top: 80px; left: 400px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(4,20);"></div><div id="r4c21" style="position: absolute; top: 80px; left: 420px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(4,21);"></div><div id="r4c22" style="position: absolute; top: 80px; left: 440px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(4,22);"></div><div id="r4c23" style="position: absolute; top: 80px; left: 460px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(4,23);"></div><div id="r4c24" style="position: absolute; top: 80px; left: 480px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(4,24);"></div><div id="r5c0" style="position: absolute; top: 100px; left: 0px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(5,0);"></div><div id="r5c1" style="position: absolute; top: 100px; left: 20px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(5,1);"></div><div id="r5c2" style="position: absolute; top: 100px; left: 40px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(5,2);"></div><div id="r5c3" style="position: absolute; top: 100px; left: 60px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(5,3);"></div><div id="r5c4" style="position: absolute; top: 100px; left: 80px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(5,4);"></div><div id="r5c5" style="position: absolute; top: 100px; left: 100px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(5,5);"></div><div id="r5c6" style="position: absolute; top: 100px; left: 120px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(5,6);"></div><div id="r5c7" style="position: absolute; top: 100px; left: 140px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(5,7);"></div><div id="r5c8" style="position: absolute; top: 100px; left: 160px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(5,8);"></div><div id="r5c9" style="position: absolute; top: 100px; left: 180px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(5,9);"></div><div id="r5c10" style="position: absolute; top: 100px; left: 200px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(5,10);"></div><div id="r5c11" style="position: absolute; top: 100px; left: 220px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(5,11);"></div><div id="r5c12" style="position: absolute; top: 100px; left: 240px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(5,12);"></div><div id="r5c13" style="position: absolute; top: 100px; left: 260px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(5,13);"></div><div id="r5c14" style="position: absolute; top: 100px; left: 280px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(5,14);"></div><div id="r5c15" style="position: absolute; top: 100px; left: 300px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(5,15);"></div><div id="r5c16" style="position: absolute; top: 100px; left: 320px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(5,16);"></div><div id="r5c17" style="position: absolute; top: 100px; left: 340px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(5,17);"></div><div id="r5c18" style="position: absolute; top: 100px; left: 360px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(5,18);"></div><div id="r5c19" style="position: absolute; top: 100px; left: 380px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(5,19);"></div><div id="r5c20" style="position: absolute; top: 100px; left: 400px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(5,20);"></div><div id="r5c21" style="position: absolute; top: 100px; left: 420px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(5,21);"></div><div id="r5c22" style="position: absolute; top: 100px; left: 440px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(5,22);"></div><div id="r5c23" style="position: absolute; top: 100px; left: 460px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(5,23);"></div><div id="r5c24" style="position: absolute; top: 100px; left: 480px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(5,24);"></div><div id="r6c0" style="position: absolute; top: 120px; left: 0px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(6,0);"></div><div id="r6c1" style="position: absolute; top: 120px; left: 20px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(6,1);"></div><div id="r6c2" style="position: absolute; top: 120px; left: 40px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(6,2);"></div><div id="r6c3" style="position: absolute; top: 120px; left: 60px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(6,3);"></div><div id="r6c4" style="position: absolute; top: 120px; left: 80px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(6,4);"></div><div id="r6c5" style="position: absolute; top: 120px; left: 100px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(6,5);"></div><div id="r6c6" style="position: absolute; top: 120px; left: 120px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(6,6);"></div><div id="r6c7" style="position: absolute; top: 120px; left: 140px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(6,7);"></div><div id="r6c8" style="position: absolute; top: 120px; left: 160px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(6,8);"></div><div id="r6c9" style="position: absolute; top: 120px; left: 180px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(6,9);"></div><div id="r6c10" style="position: absolute; top: 120px; left: 200px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(6,10);"></div><div id="r6c11" style="position: absolute; top: 120px; left: 220px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(6,11);"></div><div id="r6c12" style="position: absolute; top: 120px; left: 240px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(6,12);"></div><div id="r6c13" style="position: absolute; top: 120px; left: 260px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(6,13);"></div><div id="r6c14" style="position: absolute; top: 120px; left: 280px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(6,14);"></div><div id="r6c15" style="position: absolute; top: 120px; left: 300px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(6,15);"></div><div id="r6c16" style="position: absolute; top: 120px; left: 320px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(6,16);"></div><div id="r6c17" style="position: absolute; top: 120px; left: 340px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(6,17);"></div><div id="r6c18" style="position: absolute; top: 120px; left: 360px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(6,18);"></div><div id="r6c19" style="position: absolute; top: 120px; left: 380px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(6,19);"></div><div id="r6c20" style="position: absolute; top: 120px; left: 400px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(6,20);"></div><div id="r6c21" style="position: absolute; top: 120px; left: 420px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(6,21);"></div><div id="r6c22" style="position: absolute; top: 120px; left: 440px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(6,22);"></div><div id="r6c23" style="position: absolute; top: 120px; left: 460px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(6,23);"></div><div id="r6c24" style="position: absolute; top: 120px; left: 480px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(6,24);"></div><div id="r7c0" style="position: absolute; top: 140px; left: 0px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(7,0);"></div><div id="r7c1" style="position: absolute; top: 140px; left: 20px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(7,1);"></div><div id="r7c2" style="position: absolute; top: 140px; left: 40px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(7,2);"></div><div id="r7c3" style="position: absolute; top: 140px; left: 60px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(7,3);"></div><div id="r7c4" style="position: absolute; top: 140px; left: 80px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(7,4);"></div><div id="r7c5" style="position: absolute; top: 140px; left: 100px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(7,5);"></div><div id="r7c6" style="position: absolute; top: 140px; left: 120px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(7,6);"></div><div id="r7c7" style="position: absolute; top: 140px; left: 140px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(7,7);"></div><div id="r7c8" style="position: absolute; top: 140px; left: 160px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(7,8);"></div><div id="r7c9" style="position: absolute; top: 140px; left: 180px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(7,9);"></div><div id="r7c10" style="position: absolute; top: 140px; left: 200px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(7,10);"></div><div id="r7c11" style="position: absolute; top: 140px; left: 220px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(7,11);"></div><div id="r7c12" style="position: absolute; top: 140px; left: 240px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(7,12);"></div><div id="r7c13" style="position: absolute; top: 140px; left: 260px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(7,13);"></div><div id="r7c14" style="position: absolute; top: 140px; left: 280px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(7,14);"></div><div id="r7c15" style="position: absolute; top: 140px; left: 300px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(7,15);"></div><div id="r7c16" style="position: absolute; top: 140px; left: 320px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(7,16);"></div><div id="r7c17" style="position: absolute; top: 140px; left: 340px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(7,17);"></div><div id="r7c18" style="position: absolute; top: 140px; left: 360px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(7,18);"></div><div id="r7c19" style="position: absolute; top: 140px; left: 380px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(7,19);"></div><div id="r7c20" style="position: absolute; top: 140px; left: 400px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(7,20);"></div><div id="r7c21" style="position: absolute; top: 140px; left: 420px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(7,21);"></div><div id="r7c22" style="position: absolute; top: 140px; left: 440px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(7,22);"></div><div id="r7c23" style="position: absolute; top: 140px; left: 460px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(7,23);"></div><div id="r7c24" style="position: absolute; top: 140px; left: 480px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(7,24);"></div><div id="r8c0" style="position: absolute; top: 160px; left: 0px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(8,0);"></div><div id="r8c1" style="position: absolute; top: 160px; left: 20px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(8,1);"></div><div id="r8c2" style="position: absolute; top: 160px; left: 40px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(8,2);"></div><div id="r8c3" style="position: absolute; top: 160px; left: 60px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(8,3);"></div><div id="r8c4" style="position: absolute; top: 160px; left: 80px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(8,4);"></div><div id="r8c5" style="position: absolute; top: 160px; left: 100px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(8,5);"></div><div id="r8c6" style="position: absolute; top: 160px; left: 120px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(8,6);"></div><div id="r8c7" style="position: absolute; top: 160px; left: 140px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(8,7);"></div><div id="r8c8" style="position: absolute; top: 160px; left: 160px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(8,8);"></div><div id="r8c9" style="position: absolute; top: 160px; left: 180px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(8,9);"></div><div id="r8c10" style="position: absolute; top: 160px; left: 200px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(8,10);"></div><div id="r8c11" style="position: absolute; top: 160px; left: 220px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(8,11);"></div><div id="r8c12" style="position: absolute; top: 160px; left: 240px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(8,12);"></div><div id="r8c13" style="position: absolute; top: 160px; left: 260px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(8,13);"></div><div id="r8c14" style="position: absolute; top: 160px; left: 280px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(8,14);"></div><div id="r8c15" style="position: absolute; top: 160px; left: 300px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(8,15);"></div><div id="r8c16" style="position: absolute; top: 160px; left: 320px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(8,16);"></div><div id="r8c17" style="position: absolute; top: 160px; left: 340px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(8,17);"></div><div id="r8c18" style="position: absolute; top: 160px; left: 360px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(8,18);"></div><div id="r8c19" style="position: absolute; top: 160px; left: 380px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(8,19);"></div><div id="r8c20" style="position: absolute; top: 160px; left: 400px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(8,20);"></div><div id="r8c21" style="position: absolute; top: 160px; left: 420px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(8,21);"></div><div id="r8c22" style="position: absolute; top: 160px; left: 440px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(8,22);"></div><div id="r8c23" style="position: absolute; top: 160px; left: 460px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(8,23);"></div><div id="r8c24" style="position: absolute; top: 160px; left: 480px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(8,24);"></div><div id="r9c0" style="position: absolute; top: 180px; left: 0px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(9,0);"></div><div id="r9c1" style="position: absolute; top: 180px; left: 20px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(9,1);"></div><div id="r9c2" style="position: absolute; top: 180px; left: 40px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(9,2);"></div><div id="r9c3" style="position: absolute; top: 180px; left: 60px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(9,3);"></div><div id="r9c4" style="position: absolute; top: 180px; left: 80px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(9,4);"></div><div id="r9c5" style="position: absolute; top: 180px; left: 100px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(9,5);"></div><div id="r9c6" style="position: absolute; top: 180px; left: 120px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(9,6);"></div><div id="r9c7" style="position: absolute; top: 180px; left: 140px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(9,7);"></div><div id="r9c8" style="position: absolute; top: 180px; left: 160px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(9,8);"></div><div id="r9c9" style="position: absolute; top: 180px; left: 180px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(9,9);"></div><div id="r9c10" style="position: absolute; top: 180px; left: 200px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(9,10);"></div><div id="r9c11" style="position: absolute; top: 180px; left: 220px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(9,11);"></div><div id="r9c12" style="position: absolute; top: 180px; left: 240px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(9,12);"></div><div id="r9c13" style="position: absolute; top: 180px; left: 260px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(9,13);"></div><div id="r9c14" style="position: absolute; top: 180px; left: 280px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(9,14);"></div><div id="r9c15" style="position: absolute; top: 180px; left: 300px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(9,15);"></div><div id="r9c16" style="position: absolute; top: 180px; left: 320px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(9,16);"></div><div id="r9c17" style="position: absolute; top: 180px; left: 340px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(9,17);"></div><div id="r9c18" style="position: absolute; top: 180px; left: 360px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(9,18);"></div><div id="r9c19" style="position: absolute; top: 180px; left: 380px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(9,19);"></div><div id="r9c20" style="position: absolute; top: 180px; left: 400px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(9,20);"></div><div id="r9c21" style="position: absolute; top: 180px; left: 420px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(9,21);"></div><div id="r9c22" style="position: absolute; top: 180px; left: 440px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(9,22);"></div><div id="r9c23" style="position: absolute; top: 180px; left: 460px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(9,23);"></div><div id="r9c24" style="position: absolute; top: 180px; left: 480px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(9,24);"></div><div id="r10c0" style="position: absolute; top: 200px; left: 0px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(10,0);"></div><div id="r10c1" style="position: absolute; top: 200px; left: 20px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(10,1);"></div><div id="r10c2" style="position: absolute; top: 200px; left: 40px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(10,2);"></div><div id="r10c3" style="position: absolute; top: 200px; left: 60px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(10,3);"></div><div id="r10c4" style="position: absolute; top: 200px; left: 80px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(10,4);"></div><div id="r10c5" style="position: absolute; top: 200px; left: 100px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(10,5);"></div><div id="r10c6" style="position: absolute; top: 200px; left: 120px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(10,6);"></div><div id="r10c7" style="position: absolute; top: 200px; left: 140px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(10,7);"></div><div id="r10c8" style="position: absolute; top: 200px; left: 160px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(10,8);"></div><div id="r10c9" style="position: absolute; top: 200px; left: 180px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(10,9);"></div><div id="r10c10" style="position: absolute; top: 200px; left: 200px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(10,10);"></div><div id="r10c11" style="position: absolute; top: 200px; left: 220px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(10,11);"></div><div id="r10c12" style="position: absolute; top: 200px; left: 240px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(10,12);"></div><div id="r10c13" style="position: absolute; top: 200px; left: 260px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(10,13);"></div><div id="r10c14" style="position: absolute; top: 200px; left: 280px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(10,14);"></div><div id="r10c15" style="position: absolute; top: 200px; left: 300px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(10,15);"></div><div id="r10c16" style="position: absolute; top: 200px; left: 320px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(10,16);"></div><div id="r10c17" style="position: absolute; top: 200px; left: 340px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(10,17);"></div><div id="r10c18" style="position: absolute; top: 200px; left: 360px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(10,18);"></div><div id="r10c19" style="position: absolute; top: 200px; left: 380px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(10,19);"></div><div id="r10c20" style="position: absolute; top: 200px; left: 400px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(10,20);"></div><div id="r10c21" style="position: absolute; top: 200px; left: 420px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(10,21);"></div><div id="r10c22" style="position: absolute; top: 200px; left: 440px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(10,22);"></div><div id="r10c23" style="position: absolute; top: 200px; left: 460px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(10,23);"></div><div id="r10c24" style="position: absolute; top: 200px; left: 480px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(10,24);"></div><div id="r11c0" style="position: absolute; top: 220px; left: 0px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(11,0);"></div><div id="r11c1" style="position: absolute; top: 220px; left: 20px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(11,1);"></div><div id="r11c2" style="position: absolute; top: 220px; left: 40px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(11,2);"></div><div id="r11c3" style="position: absolute; top: 220px; left: 60px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(11,3);"></div><div id="r11c4" style="position: absolute; top: 220px; left: 80px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(11,4);"></div><div id="r11c5" style="position: absolute; top: 220px; left: 100px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(11,5);"></div><div id="r11c6" style="position: absolute; top: 220px; left: 120px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(11,6);"></div><div id="r11c7" style="position: absolute; top: 220px; left: 140px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(11,7);"></div><div id="r11c8" style="position: absolute; top: 220px; left: 160px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(11,8);"></div><div id="r11c9" style="position: absolute; top: 220px; left: 180px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(11,9);"></div><div id="r11c10" style="position: absolute; top: 220px; left: 200px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(11,10);"></div><div id="r11c11" style="position: absolute; top: 220px; left: 220px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(11,11);"></div><div id="r11c12" style="position: absolute; top: 220px; left: 240px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(11,12);"></div><div id="r11c13" style="position: absolute; top: 220px; left: 260px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(11,13);"></div><div id="r11c14" style="position: absolute; top: 220px; left: 280px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(11,14);"></div><div id="r11c15" style="position: absolute; top: 220px; left: 300px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(11,15);"></div><div id="r11c16" style="position: absolute; top: 220px; left: 320px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(11,16);"></div><div id="r11c17" style="position: absolute; top: 220px; left: 340px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(11,17);"></div><div id="r11c18" style="position: absolute; top: 220px; left: 360px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(11,18);"></div><div id="r11c19" style="position: absolute; top: 220px; left: 380px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(11,19);"></div><div id="r11c20" style="position: absolute; top: 220px; left: 400px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(11,20);"></div><div id="r11c21" style="position: absolute; top: 220px; left: 420px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(11,21);"></div><div id="r11c22" style="position: absolute; top: 220px; left: 440px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(11,22);"></div><div id="r11c23" style="position: absolute; top: 220px; left: 460px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(11,23);"></div><div id="r11c24" style="position: absolute; top: 220px; left: 480px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(11,24);"></div><div id="r12c0" style="position: absolute; top: 240px; left: 0px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(12,0);"></div><div id="r12c1" style="position: absolute; top: 240px; left: 20px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(12,1);"></div><div id="r12c2" style="position: absolute; top: 240px; left: 40px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(12,2);"></div><div id="r12c3" style="position: absolute; top: 240px; left: 60px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(12,3);"></div><div id="r12c4" style="position: absolute; top: 240px; left: 80px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(12,4);"></div><div id="r12c5" style="position: absolute; top: 240px; left: 100px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(12,5);"></div><div id="r12c6" style="position: absolute; top: 240px; left: 120px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(12,6);"></div><div id="r12c7" style="position: absolute; top: 240px; left: 140px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(12,7);"></div><div id="r12c8" style="position: absolute; top: 240px; left: 160px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(12,8);"></div><div id="r12c9" style="position: absolute; top: 240px; left: 180px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(12,9);"></div><div id="r12c10" style="position: absolute; top: 240px; left: 200px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(12,10);"></div><div id="r12c11" style="position: absolute; top: 240px; left: 220px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(12,11);"></div><div id="r12c12" style="position: absolute; top: 240px; left: 240px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(12,12);"></div><div id="r12c13" style="position: absolute; top: 240px; left: 260px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(12,13);"></div><div id="r12c14" style="position: absolute; top: 240px; left: 280px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(12,14);"></div><div id="r12c15" style="position: absolute; top: 240px; left: 300px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(12,15);"></div><div id="r12c16" style="position: absolute; top: 240px; left: 320px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(12,16);"></div><div id="r12c17" style="position: absolute; top: 240px; left: 340px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(12,17);"></div><div id="r12c18" style="position: absolute; top: 240px; left: 360px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(12,18);"></div><div id="r12c19" style="position: absolute; top: 240px; left: 380px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(12,19);"></div><div id="r12c20" style="position: absolute; top: 240px; left: 400px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(12,20);"></div><div id="r12c21" style="position: absolute; top: 240px; left: 420px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(12,21);"></div><div id="r12c22" style="position: absolute; top: 240px; left: 440px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(12,22);"></div><div id="r12c23" style="position: absolute; top: 240px; left: 460px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(12,23);"></div><div id="r12c24" style="position: absolute; top: 240px; left: 480px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(12,24);"></div><div id="r13c0" style="position: absolute; top: 260px; left: 0px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(13,0);"></div><div id="r13c1" style="position: absolute; top: 260px; left: 20px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(13,1);"></div><div id="r13c2" style="position: absolute; top: 260px; left: 40px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(13,2);"></div><div id="r13c3" style="position: absolute; top: 260px; left: 60px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(13,3);"></div><div id="r13c4" style="position: absolute; top: 260px; left: 80px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(13,4);"></div><div id="r13c5" style="position: absolute; top: 260px; left: 100px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(13,5);"></div><div id="r13c6" style="position: absolute; top: 260px; left: 120px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(13,6);"></div><div id="r13c7" style="position: absolute; top: 260px; left: 140px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(13,7);"></div><div id="r13c8" style="position: absolute; top: 260px; left: 160px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(13,8);"></div><div id="r13c9" style="position: absolute; top: 260px; left: 180px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(13,9);"></div><div id="r13c10" style="position: absolute; top: 260px; left: 200px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(13,10);"></div><div id="r13c11" style="position: absolute; top: 260px; left: 220px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(13,11);"></div><div id="r13c12" style="position: absolute; top: 260px; left: 240px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(13,12);"></div><div id="r13c13" style="position: absolute; top: 260px; left: 260px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(13,13);"></div><div id="r13c14" style="position: absolute; top: 260px; left: 280px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(13,14);"></div><div id="r13c15" style="position: absolute; top: 260px; left: 300px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(13,15);"></div><div id="r13c16" style="position: absolute; top: 260px; left: 320px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(13,16);"></div><div id="r13c17" style="position: absolute; top: 260px; left: 340px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(13,17);"></div><div id="r13c18" style="position: absolute; top: 260px; left: 360px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(13,18);"></div><div id="r13c19" style="position: absolute; top: 260px; left: 380px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(13,19);"></div><div id="r13c20" style="position: absolute; top: 260px; left: 400px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(13,20);"></div><div id="r13c21" style="position: absolute; top: 260px; left: 420px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(13,21);"></div><div id="r13c22" style="position: absolute; top: 260px; left: 440px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(13,22);"></div><div id="r13c23" style="position: absolute; top: 260px; left: 460px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(13,23);"></div><div id="r13c24" style="position: absolute; top: 260px; left: 480px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(13,24);"></div><div id="r14c0" style="position: absolute; top: 280px; left: 0px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(14,0);"></div><div id="r14c1" style="position: absolute; top: 280px; left: 20px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(14,1);"></div><div id="r14c2" style="position: absolute; top: 280px; left: 40px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(14,2);"></div><div id="r14c3" style="position: absolute; top: 280px; left: 60px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(14,3);"></div><div id="r14c4" style="position: absolute; top: 280px; left: 80px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(14,4);"></div><div id="r14c5" style="position: absolute; top: 280px; left: 100px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(14,5);"></div><div id="r14c6" style="position: absolute; top: 280px; left: 120px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(14,6);"></div><div id="r14c7" style="position: absolute; top: 280px; left: 140px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(14,7);"></div><div id="r14c8" style="position: absolute; top: 280px; left: 160px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(14,8);"></div><div id="r14c9" style="position: absolute; top: 280px; left: 180px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(14,9);"></div><div id="r14c10" style="position: absolute; top: 280px; left: 200px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(14,10);"></div><div id="r14c11" style="position: absolute; top: 280px; left: 220px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(14,11);"></div><div id="r14c12" style="position: absolute; top: 280px; left: 240px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(14,12);"></div><div id="r14c13" style="position: absolute; top: 280px; left: 260px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(14,13);"></div><div id="r14c14" style="position: absolute; top: 280px; left: 280px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(14,14);"></div><div id="r14c15" style="position: absolute; top: 280px; left: 300px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(14,15);"></div><div id="r14c16" style="position: absolute; top: 280px; left: 320px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(14,16);"></div><div id="r14c17" style="position: absolute; top: 280px; left: 340px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(14,17);"></div><div id="r14c18" style="position: absolute; top: 280px; left: 360px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(14,18);"></div><div id="r14c19" style="position: absolute; top: 280px; left: 380px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(14,19);"></div><div id="r14c20" style="position: absolute; top: 280px; left: 400px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(14,20);"></div><div id="r14c21" style="position: absolute; top: 280px; left: 420px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(14,21);"></div><div id="r14c22" style="position: absolute; top: 280px; left: 440px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(14,22);"></div><div id="r14c23" style="position: absolute; top: 280px; left: 460px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(14,23);"></div><div id="r14c24" style="position: absolute; top: 280px; left: 480px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(14,24);"></div><div id="r15c0" style="position: absolute; top: 300px; left: 0px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(15,0);"></div><div id="r15c1" style="position: absolute; top: 300px; left: 20px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(15,1);"></div><div id="r15c2" style="position: absolute; top: 300px; left: 40px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(15,2);"></div><div id="r15c3" style="position: absolute; top: 300px; left: 60px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(15,3);"></div><div id="r15c4" style="position: absolute; top: 300px; left: 80px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(15,4);"></div><div id="r15c5" style="position: absolute; top: 300px; left: 100px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(15,5);"></div><div id="r15c6" style="position: absolute; top: 300px; left: 120px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(15,6);"></div><div id="r15c7" style="position: absolute; top: 300px; left: 140px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(15,7);"></div><div id="r15c8" style="position: absolute; top: 300px; left: 160px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(15,8);"></div><div id="r15c9" style="position: absolute; top: 300px; left: 180px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(15,9);"></div><div id="r15c10" style="position: absolute; top: 300px; left: 200px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(15,10);"></div><div id="r15c11" style="position: absolute; top: 300px; left: 220px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(15,11);"></div><div id="r15c12" style="position: absolute; top: 300px; left: 240px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(15,12);"></div><div id="r15c13" style="position: absolute; top: 300px; left: 260px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(15,13);"></div><div id="r15c14" style="position: absolute; top: 300px; left: 280px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(15,14);"></div><div id="r15c15" style="position: absolute; top: 300px; left: 300px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(15,15);"></div><div id="r15c16" style="position: absolute; top: 300px; left: 320px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(15,16);"></div><div id="r15c17" style="position: absolute; top: 300px; left: 340px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(15,17);"></div><div id="r15c18" style="position: absolute; top: 300px; left: 360px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(15,18);"></div><div id="r15c19" style="position: absolute; top: 300px; left: 380px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(15,19);"></div><div id="r15c20" style="position: absolute; top: 300px; left: 400px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(15,20);"></div><div id="r15c21" style="position: absolute; top: 300px; left: 420px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(15,21);"></div><div id="r15c22" style="position: absolute; top: 300px; left: 440px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(15,22);"></div><div id="r15c23" style="position: absolute; top: 300px; left: 460px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(15,23);"></div><div id="r15c24" style="position: absolute; top: 300px; left: 480px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(15,24);"></div><div id="r16c0" style="position: absolute; top: 320px; left: 0px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(16,0);"></div><div id="r16c1" style="position: absolute; top: 320px; left: 20px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(16,1);"></div><div id="r16c2" style="position: absolute; top: 320px; left: 40px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(16,2);"></div><div id="r16c3" style="position: absolute; top: 320px; left: 60px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(16,3);"></div><div id="r16c4" style="position: absolute; top: 320px; left: 80px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(16,4);"></div><div id="r16c5" style="position: absolute; top: 320px; left: 100px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(16,5);"></div><div id="r16c6" style="position: absolute; top: 320px; left: 120px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(16,6);"></div><div id="r16c7" style="position: absolute; top: 320px; left: 140px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(16,7);"></div><div id="r16c8" style="position: absolute; top: 320px; left: 160px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(16,8);"></div><div id="r16c9" style="position: absolute; top: 320px; left: 180px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(16,9);"></div><div id="r16c10" style="position: absolute; top: 320px; left: 200px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(16,10);"></div><div id="r16c11" style="position: absolute; top: 320px; left: 220px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(16,11);"></div><div id="r16c12" style="position: absolute; top: 320px; left: 240px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(16,12);"></div><div id="r16c13" style="position: absolute; top: 320px; left: 260px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(16,13);"></div><div id="r16c14" style="position: absolute; top: 320px; left: 280px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(16,14);"></div><div id="r16c15" style="position: absolute; top: 320px; left: 300px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(16,15);"></div><div id="r16c16" style="position: absolute; top: 320px; left: 320px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(16,16);"></div><div id="r16c17" style="position: absolute; top: 320px; left: 340px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(16,17);"></div><div id="r16c18" style="position: absolute; top: 320px; left: 360px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(16,18);"></div><div id="r16c19" style="position: absolute; top: 320px; left: 380px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(16,19);"></div><div id="r16c20" style="position: absolute; top: 320px; left: 400px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(16,20);"></div><div id="r16c21" style="position: absolute; top: 320px; left: 420px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(16,21);"></div><div id="r16c22" style="position: absolute; top: 320px; left: 440px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(16,22);"></div><div id="r16c23" style="position: absolute; top: 320px; left: 460px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(16,23);"></div><div id="r16c24" style="position: absolute; top: 320px; left: 480px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(16,24);"></div><div id="r17c0" style="position: absolute; top: 340px; left: 0px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(17,0);"></div><div id="r17c1" style="position: absolute; top: 340px; left: 20px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(17,1);"></div><div id="r17c2" style="position: absolute; top: 340px; left: 40px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(17,2);"></div><div id="r17c3" style="position: absolute; top: 340px; left: 60px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(17,3);"></div><div id="r17c4" style="position: absolute; top: 340px; left: 80px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(17,4);"></div><div id="r17c5" style="position: absolute; top: 340px; left: 100px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(17,5);"></div><div id="r17c6" style="position: absolute; top: 340px; left: 120px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(17,6);"></div><div id="r17c7" style="position: absolute; top: 340px; left: 140px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(17,7);"></div><div id="r17c8" style="position: absolute; top: 340px; left: 160px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(17,8);"></div><div id="r17c9" style="position: absolute; top: 340px; left: 180px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(17,9);"></div><div id="r17c10" style="position: absolute; top: 340px; left: 200px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(17,10);"></div><div id="r17c11" style="position: absolute; top: 340px; left: 220px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(17,11);"></div><div id="r17c12" style="position: absolute; top: 340px; left: 240px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(17,12);"></div><div id="r17c13" style="position: absolute; top: 340px; left: 260px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(17,13);"></div><div id="r17c14" style="position: absolute; top: 340px; left: 280px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(17,14);"></div><div id="r17c15" style="position: absolute; top: 340px; left: 300px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(17,15);"></div><div id="r17c16" style="position: absolute; top: 340px; left: 320px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(17,16);"></div><div id="r17c17" style="position: absolute; top: 340px; left: 340px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(17,17);"></div><div id="r17c18" style="position: absolute; top: 340px; left: 360px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(17,18);"></div><div id="r17c19" style="position: absolute; top: 340px; left: 380px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(17,19);"></div><div id="r17c20" style="position: absolute; top: 340px; left: 400px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(17,20);"></div><div id="r17c21" style="position: absolute; top: 340px; left: 420px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(17,21);"></div><div id="r17c22" style="position: absolute; top: 340px; left: 440px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(17,22);"></div><div id="r17c23" style="position: absolute; top: 340px; left: 460px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(17,23);"></div><div id="r17c24" style="position: absolute; top: 340px; left: 480px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(17,24);"></div><div id="r18c0" style="position: absolute; top: 360px; left: 0px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(18,0);"></div><div id="r18c1" style="position: absolute; top: 360px; left: 20px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(18,1);"></div><div id="r18c2" style="position: absolute; top: 360px; left: 40px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(18,2);"></div><div id="r18c3" style="position: absolute; top: 360px; left: 60px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(18,3);"></div><div id="r18c4" style="position: absolute; top: 360px; left: 80px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(18,4);"></div><div id="r18c5" style="position: absolute; top: 360px; left: 100px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(18,5);"></div><div id="r18c6" style="position: absolute; top: 360px; left: 120px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(18,6);"></div><div id="r18c7" style="position: absolute; top: 360px; left: 140px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(18,7);"></div><div id="r18c8" style="position: absolute; top: 360px; left: 160px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(18,8);"></div><div id="r18c9" style="position: absolute; top: 360px; left: 180px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(18,9);"></div><div id="r18c10" style="position: absolute; top: 360px; left: 200px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(18,10);"></div><div id="r18c11" style="position: absolute; top: 360px; left: 220px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(18,11);"></div><div id="r18c12" style="position: absolute; top: 360px; left: 240px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(18,12);"></div><div id="r18c13" style="position: absolute; top: 360px; left: 260px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(18,13);"></div><div id="r18c14" style="position: absolute; top: 360px; left: 280px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(18,14);"></div><div id="r18c15" style="position: absolute; top: 360px; left: 300px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(18,15);"></div><div id="r18c16" style="position: absolute; top: 360px; left: 320px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(18,16);"></div><div id="r18c17" style="position: absolute; top: 360px; left: 340px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(18,17);"></div><div id="r18c18" style="position: absolute; top: 360px; left: 360px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(18,18);"></div><div id="r18c19" style="position: absolute; top: 360px; left: 380px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(18,19);"></div><div id="r18c20" style="position: absolute; top: 360px; left: 400px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(18,20);"></div><div id="r18c21" style="position: absolute; top: 360px; left: 420px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(18,21);"></div><div id="r18c22" style="position: absolute; top: 360px; left: 440px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(18,22);"></div><div id="r18c23" style="position: absolute; top: 360px; left: 460px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(18,23);"></div><div id="r18c24" style="position: absolute; top: 360px; left: 480px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(18,24);"></div><div id="r19c0" style="position: absolute; top: 380px; left: 0px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(19,0);"></div><div id="r19c1" style="position: absolute; top: 380px; left: 20px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(19,1);"></div><div id="r19c2" style="position: absolute; top: 380px; left: 40px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(19,2);"></div><div id="r19c3" style="position: absolute; top: 380px; left: 60px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(19,3);"></div><div id="r19c4" style="position: absolute; top: 380px; left: 80px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(19,4);"></div><div id="r19c5" style="position: absolute; top: 380px; left: 100px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(19,5);"></div><div id="r19c6" style="position: absolute; top: 380px; left: 120px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(19,6);"></div><div id="r19c7" style="position: absolute; top: 380px; left: 140px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(19,7);"></div><div id="r19c8" style="position: absolute; top: 380px; left: 160px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(19,8);"></div><div id="r19c9" style="position: absolute; top: 380px; left: 180px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(19,9);"></div><div id="r19c10" style="position: absolute; top: 380px; left: 200px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(19,10);"></div><div id="r19c11" style="position: absolute; top: 380px; left: 220px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(19,11);"></div><div id="r19c12" style="position: absolute; top: 380px; left: 240px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(19,12);"></div><div id="r19c13" style="position: absolute; top: 380px; left: 260px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(19,13);"></div><div id="r19c14" style="position: absolute; top: 380px; left: 280px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(19,14);"></div><div id="r19c15" style="position: absolute; top: 380px; left: 300px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(19,15);"></div><div id="r19c16" style="position: absolute; top: 380px; left: 320px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(19,16);"></div><div id="r19c17" style="position: absolute; top: 380px; left: 340px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(19,17);"></div><div id="r19c18" style="position: absolute; top: 380px; left: 360px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(19,18);"></div><div id="r19c19" style="position: absolute; top: 380px; left: 380px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(19,19);"></div><div id="r19c20" style="position: absolute; top: 380px; left: 400px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(19,20);"></div><div id="r19c21" style="position: absolute; top: 380px; left: 420px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(19,21);"></div><div id="r19c22" style="position: absolute; top: 380px; left: 440px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(19,22);"></div><div id="r19c23" style="position: absolute; top: 380px; left: 460px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(19,23);"></div><div id="r19c24" style="position: absolute; top: 380px; left: 480px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(19,24);"></div><div id="r20c0" style="position: absolute; top: 400px; left: 0px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(20,0);"></div><div id="r20c1" style="position: absolute; top: 400px; left: 20px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(20,1);"></div><div id="r20c2" style="position: absolute; top: 400px; left: 40px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(20,2);"></div><div id="r20c3" style="position: absolute; top: 400px; left: 60px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(20,3);"></div><div id="r20c4" style="position: absolute; top: 400px; left: 80px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(20,4);"></div><div id="r20c5" style="position: absolute; top: 400px; left: 100px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(20,5);"></div><div id="r20c6" style="position: absolute; top: 400px; left: 120px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(20,6);"></div><div id="r20c7" style="position: absolute; top: 400px; left: 140px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(20,7);"></div><div id="r20c8" style="position: absolute; top: 400px; left: 160px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(20,8);"></div><div id="r20c9" style="position: absolute; top: 400px; left: 180px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(20,9);"></div><div id="r20c10" style="position: absolute; top: 400px; left: 200px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(20,10);"></div><div id="r20c11" style="position: absolute; top: 400px; left: 220px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(20,11);"></div><div id="r20c12" style="position: absolute; top: 400px; left: 240px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(20,12);"></div><div id="r20c13" style="position: absolute; top: 400px; left: 260px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(20,13);"></div><div id="r20c14" style="position: absolute; top: 400px; left: 280px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(20,14);"></div><div id="r20c15" style="position: absolute; top: 400px; left: 300px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(20,15);"></div><div id="r20c16" style="position: absolute; top: 400px; left: 320px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(20,16);"></div><div id="r20c17" style="position: absolute; top: 400px; left: 340px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(20,17);"></div><div id="r20c18" style="position: absolute; top: 400px; left: 360px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(20,18);"></div><div id="r20c19" style="position: absolute; top: 400px; left: 380px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(20,19);"></div><div id="r20c20" style="position: absolute; top: 400px; left: 400px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(20,20);"></div><div id="r20c21" style="position: absolute; top: 400px; left: 420px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(20,21);"></div><div id="r20c22" style="position: absolute; top: 400px; left: 440px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(20,22);"></div><div id="r20c23" style="position: absolute; top: 400px; left: 460px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(20,23);"></div><div id="r20c24" style="position: absolute; top: 400px; left: 480px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(20,24);"></div><div id="r21c0" style="position: absolute; top: 420px; left: 0px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(21,0);"></div><div id="r21c1" style="position: absolute; top: 420px; left: 20px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(21,1);"></div><div id="r21c2" style="position: absolute; top: 420px; left: 40px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(21,2);"></div><div id="r21c3" style="position: absolute; top: 420px; left: 60px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(21,3);"></div><div id="r21c4" style="position: absolute; top: 420px; left: 80px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(21,4);"></div><div id="r21c5" style="position: absolute; top: 420px; left: 100px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(21,5);"></div><div id="r21c6" style="position: absolute; top: 420px; left: 120px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(21,6);"></div><div id="r21c7" style="position: absolute; top: 420px; left: 140px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(21,7);"></div><div id="r21c8" style="position: absolute; top: 420px; left: 160px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(21,8);"></div><div id="r21c9" style="position: absolute; top: 420px; left: 180px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(21,9);"></div><div id="r21c10" style="position: absolute; top: 420px; left: 200px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(21,10);"></div><div id="r21c11" style="position: absolute; top: 420px; left: 220px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(21,11);"></div><div id="r21c12" style="position: absolute; top: 420px; left: 240px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(21,12);"></div><div id="r21c13" style="position: absolute; top: 420px; left: 260px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(21,13);"></div><div id="r21c14" style="position: absolute; top: 420px; left: 280px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(21,14);"></div><div id="r21c15" style="position: absolute; top: 420px; left: 300px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(21,15);"></div><div id="r21c16" style="position: absolute; top: 420px; left: 320px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(21,16);"></div><div id="r21c17" style="position: absolute; top: 420px; left: 340px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(21,17);"></div><div id="r21c18" style="position: absolute; top: 420px; left: 360px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(21,18);"></div><div id="r21c19" style="position: absolute; top: 420px; left: 380px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(21,19);"></div><div id="r21c20" style="position: absolute; top: 420px; left: 400px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(21,20);"></div><div id="r21c21" style="position: absolute; top: 420px; left: 420px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(21,21);"></div><div id="r21c22" style="position: absolute; top: 420px; left: 440px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(21,22);"></div><div id="r21c23" style="position: absolute; top: 420px; left: 460px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(21,23);"></div><div id="r21c24" style="position: absolute; top: 420px; left: 480px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(21,24);"></div><div id="r22c0" style="position: absolute; top: 440px; left: 0px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(22,0);"></div><div id="r22c1" style="position: absolute; top: 440px; left: 20px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(22,1);"></div><div id="r22c2" style="position: absolute; top: 440px; left: 40px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(22,2);"></div><div id="r22c3" style="position: absolute; top: 440px; left: 60px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(22,3);"></div><div id="r22c4" style="position: absolute; top: 440px; left: 80px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(22,4);"></div><div id="r22c5" style="position: absolute; top: 440px; left: 100px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(22,5);"></div><div id="r22c6" style="position: absolute; top: 440px; left: 120px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(22,6);"></div><div id="r22c7" style="position: absolute; top: 440px; left: 140px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(22,7);"></div><div id="r22c8" style="position: absolute; top: 440px; left: 160px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(22,8);"></div><div id="r22c9" style="position: absolute; top: 440px; left: 180px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(22,9);"></div><div id="r22c10" style="position: absolute; top: 440px; left: 200px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(22,10);"></div><div id="r22c11" style="position: absolute; top: 440px; left: 220px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(22,11);"></div><div id="r22c12" style="position: absolute; top: 440px; left: 240px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(22,12);"></div><div id="r22c13" style="position: absolute; top: 440px; left: 260px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(22,13);"></div><div id="r22c14" style="position: absolute; top: 440px; left: 280px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(22,14);"></div><div id="r22c15" style="position: absolute; top: 440px; left: 300px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(22,15);"></div><div id="r22c16" style="position: absolute; top: 440px; left: 320px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(22,16);"></div><div id="r22c17" style="position: absolute; top: 440px; left: 340px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(22,17);"></div><div id="r22c18" style="position: absolute; top: 440px; left: 360px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(22,18);"></div><div id="r22c19" style="position: absolute; top: 440px; left: 380px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(22,19);"></div><div id="r22c20" style="position: absolute; top: 440px; left: 400px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(22,20);"></div><div id="r22c21" style="position: absolute; top: 440px; left: 420px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(22,21);"></div><div id="r22c22" style="position: absolute; top: 440px; left: 440px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(22,22);"></div><div id="r22c23" style="position: absolute; top: 440px; left: 460px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(22,23);"></div><div id="r22c24" style="position: absolute; top: 440px; left: 480px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(22,24);"></div><div id="r23c0" style="position: absolute; top: 460px; left: 0px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(23,0);"></div><div id="r23c1" style="position: absolute; top: 460px; left: 20px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(23,1);"></div><div id="r23c2" style="position: absolute; top: 460px; left: 40px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(23,2);"></div><div id="r23c3" style="position: absolute; top: 460px; left: 60px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(23,3);"></div><div id="r23c4" style="position: absolute; top: 460px; left: 80px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(23,4);"></div><div id="r23c5" style="position: absolute; top: 460px; left: 100px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(23,5);"></div><div id="r23c6" style="position: absolute; top: 460px; left: 120px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(23,6);"></div><div id="r23c7" style="position: absolute; top: 460px; left: 140px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(23,7);"></div><div id="r23c8" style="position: absolute; top: 460px; left: 160px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(23,8);"></div><div id="r23c9" style="position: absolute; top: 460px; left: 180px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(23,9);"></div><div id="r23c10" style="position: absolute; top: 460px; left: 200px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(23,10);"></div><div id="r23c11" style="position: absolute; top: 460px; left: 220px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(23,11);"></div><div id="r23c12" style="position: absolute; top: 460px; left: 240px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(23,12);"></div><div id="r23c13" style="position: absolute; top: 460px; left: 260px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(23,13);"></div><div id="r23c14" style="position: absolute; top: 460px; left: 280px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(23,14);"></div><div id="r23c15" style="position: absolute; top: 460px; left: 300px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(23,15);"></div><div id="r23c16" style="position: absolute; top: 460px; left: 320px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(23,16);"></div><div id="r23c17" style="position: absolute; top: 460px; left: 340px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(23,17);"></div><div id="r23c18" style="position: absolute; top: 460px; left: 360px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(23,18);"></div><div id="r23c19" style="position: absolute; top: 460px; left: 380px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(23,19);"></div><div id="r23c20" style="position: absolute; top: 460px; left: 400px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(23,20);"></div><div id="r23c21" style="position: absolute; top: 460px; left: 420px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(23,21);"></div><div id="r23c22" style="position: absolute; top: 460px; left: 440px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(23,22);"></div><div id="r23c23" style="position: absolute; top: 460px; left: 460px; width: 20px; height: 20px; background-color: white;" onmousedown="toggle_wall(23,23);"></div><div id="r23c24" style="position: absolute; top: 460px; left: 480px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(23,24);"></div><div id="r24c0" style="position: absolute; top: 480px; left: 0px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(24,0);"></div><div id="r24c1" style="position: absolute; top: 480px; left: 20px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(24,1);"></div><div id="r24c2" style="position: absolute; top: 480px; left: 40px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(24,2);"></div><div id="r24c3" style="position: absolute; top: 480px; left: 60px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(24,3);"></div><div id="r24c4" style="position: absolute; top: 480px; left: 80px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(24,4);"></div><div id="r24c5" style="position: absolute; top: 480px; left: 100px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(24,5);"></div><div id="r24c6" style="position: absolute; top: 480px; left: 120px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(24,6);"></div><div id="r24c7" style="position: absolute; top: 480px; left: 140px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(24,7);"></div><div id="r24c8" style="position: absolute; top: 480px; left: 160px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(24,8);"></div><div id="r24c9" style="position: absolute; top: 480px; left: 180px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(24,9);"></div><div id="r24c10" style="position: absolute; top: 480px; left: 200px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(24,10);"></div><div id="r24c11" style="position: absolute; top: 480px; left: 220px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(24,11);"></div><div id="r24c12" style="position: absolute; top: 480px; left: 240px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(24,12);"></div><div id="r24c13" style="position: absolute; top: 480px; left: 260px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(24,13);"></div><div id="r24c14" style="position: absolute; top: 480px; left: 280px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(24,14);"></div><div id="r24c15" style="position: absolute; top: 480px; left: 300px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(24,15);"></div><div id="r24c16" style="position: absolute; top: 480px; left: 320px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(24,16);"></div><div id="r24c17" style="position: absolute; top: 480px; left: 340px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(24,17);"></div><div id="r24c18" style="position: absolute; top: 480px; left: 360px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(24,18);"></div><div id="r24c19" style="position: absolute; top: 480px; left: 380px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(24,19);"></div><div id="r24c20" style="position: absolute; top: 480px; left: 400px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(24,20);"></div><div id="r24c21" style="position: absolute; top: 480px; left: 420px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(24,21);"></div><div id="r24c22" style="position: absolute; top: 480px; left: 440px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(24,22);"></div><div id="r24c23" style="position: absolute; top: 480px; left: 460px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(24,23);"></div><div id="r24c24" style="position: absolute; top: 480px; left: 480px; width: 20px; height: 20px; background-color: blue;" onmousedown="toggle_wall(24,24);"></div></div> 
+
+		<!-- end of myCanvas div -->
+
+		<form name="Controls">
+			<table style="width: 100%; text-align: center;" border="0" cellpadding="2">
+				<tbody>
+
+					<tr>
+					<td><input name="Go" value="Go" onclick="go();" type="button"></td>
+					<td><input name="Stop" value="Stop" onclick="stop();" type="button"></td>
+					<td><input name="Step" value="Step" onclick="update();" type="button"></td>
+					<td><input name="Reset" value="Reset" onclick="stop();fullReset();" type="button"></td>
+					<td><input name="Map-" value="&lt;--" onclick="stop();changeMap(-1);document.calc.mapi.value = getCMI();" type="button"> MAP 
+					<input name="Map+" value="--&gt;" onclick="stop();changeMap(1);document.calc.mapi.value = getCMI();" type="button"></td>
+					</tr>
+
+				</tbody>
+			</table>
+
+			<table style="width: 100%; text-align: center; background-color: rgb(238, 238, 170);">
+				<tbody>
+
+					<tr>
+					<td><textarea readonly="readonly" name="state" id="state" rows="1" cols="3" size="10" style="overflow: hidden; text-align: center;"></textarea></td>
+					<td><textarea readonly="readonly" name="surroundings" id="surroundings" rows="1" cols="5" style="overflow: hidden; text-align: center;"></textarea></td>
+					<td><textarea readonly="readonly" name="progress" id="progress" rows="1" cols="10" style="overflow: hidden; text-align: center;"></textarea></td>	
+					</tr>
+
+					<tr>
+					<td width="33%"> State </td>
+					<td width="33%"> Surroundings </td> 
+					<td width="33%"> Cells to go </td>
+					</tr>
+
+				</tbody>
+			</table>
+
+			<table style="width: 100%; text-align: center; background-color: rgb(238, 238, 170);">
+				<tbody>
+
+					<tr>
+					<td><textarea name="currentrule" readonly="readonly" id="currentrule" rows="1" cols="30" style="overflow: hidden; text-align: center;"> </textarea></td>
+					<td><textarea name="nextrule" readonly="readonly" id="nextrule" rows="1" cols="30" style="overflow: hidden; text-align: center;"> </textarea></td>
+					</tr>
+
+					<tr>
+					<td> Previous Rule </td>
+					<td> Next Rule </td>
+					</tr>
+					
+				</tbody>
+			</table>
+
+			<table style="width: 100%; text-align: center; background-color: rgb(238, 238, 170);">
+				<tbody>
+
+					<tr>
+					<td><input name="West" value="West" onclick="stop();teleportRobot(&#39;W&#39;);" type="button"></td>
+					<td><input name="East" value="East" onclick="stop();teleportRobot(&#39;E&#39;);" type="button"></td>
+					<td> - Teleport Robot - </td>
+					<td><input name="North" value="North" onclick="stop();teleportRobot(&#39;N&#39;);" type="button"></td>
+					<td><input name="South" value="South" onclick="stop();teleportRobot(&#39;S&#39;);" type="button"></td>
+					</tr>
+
+				</tbody>
+			</table>
+		</form>
+	</td>
+	<td> <!-- right-hand side -->
+		<form name="calc" method="post" action="http://www.cs.hmc.edu/picobot/picouploader.py">
+			<table border="0">
+				<tbody>
+					<tr>
+					
+						<td>
+							<center><h1>Picobot</h1></center>
+						</td>
+						
+					</tr>
+					<tr>
+				
+						<td>
+						  							  <center><b>Rules</b></center>
+						  							  
+<textarea name="rules" id="rules" rows="20" cols="60" style="font-family: courier;"># 
+# Hashtag lines are optional comments
+#
+
+# state 0 with nothing N: go one step N
+0 x*** -&gt; N 0   
+
+# state 0 with something to the N: go W + into st 1 
+# ** This will crash if picobot has a wall to the W! **
+0 N*** -&gt; W 1 
+
+
+# state 1 with nothing to the S: go one step S
+1 ***x -&gt; S 1   
+
+# state 1 with something to the S: stay put + into state 0
+1 ***S -&gt; X 0   
+</textarea>
+						</td>
+				
+				</tr>
+					<tr>
+					
+						<td>
+							<center>
+								<input name="add" value="Enter rules for Picobot" onclick="stop();document.calc.mesg.value = computeRules(document.calc.rules.value);" type="button">&nbsp;
+								<input name="mapi" value="0" type="hidden"> 
+							</center>
+						</td>
+					
+					</tr>
+					
+					<tr>
+					
+						<td>
+							<center>
+						  Be sure to hit "Enter rules" after making changes.
+							</center>
+						</td>
+					
+					</tr>
+					<tr>
+				
+						<td>
+						  <br>
+    					  <center>
+               <b>Messages</b>
+                </center>
+							<textarea readonly="readonly" id="mesg" name="mesg" rows="10" cols="60" style="font-family: courier;"> </textarea>
+						</td>
+						
+					</tr>
+					<tr>
+					
+				</tr>
+				</tbody>
+			</table>
+		</form>
+	</td>
+	
+</tr>
+</tbody>
+</table>
+
+<!-- Here begins the picobot engine -->
+<script language="javascript" type="text/javascript">
+
+
+
+try
+{
+
+
+
+function drawOneSquare(r, c, hexcolor)
+{
+    divName = 'r' + r + 'c' + c;
+    document.getElementById(divName).style.backgroundColor = hexcolor;
+}
+
+var DEBUG = 0; // set to 0 to turn off debugging
+var TIMING_DELAY = 20;
+
+var MAXROWS = 25;
+var MAXCOLS = 25;
+
+var MAXCOOKIES = 625
+var cookies_remaining = MAXCOOKIES
+
+var COLORS = ["white","blue","lime","red","#808080","aaaaff","ff11dd"]
+var COOKIE_COLOR = 6
+var DONE_COLOR = 5
+var VISITED_COLOR = 4
+var ERROR_COLOR = 3
+var ROBOT_COLOR = 2
+var WALL_COLOR = 1
+var CLEAR_COLOR = 0
+
+function updateCellColor( r, c, colorIndex )
+{
+    currentCells[r][c] = colorIndex;
+    drawOneSquare(r,c,COLORS[colorIndex]);
+}
+
+// global variable for current cells
+var currentCells = Array(MAXROWS);
+
+// draw the map above...
+function drawMap( map )
+{
+    currentCells = Array(MAXROWS);
+    // map will be a 25x25 2d array
+    for (var r = 0 ; r < MAXROWS ; ++r)
+    {
+        currentCells[r] = Array(MAXCOLS); // make the row
+        for (var c = 0 ; c < MAXCOLS ; ++c)
+        {
+            if (r < map.length && c < map[0].length)
+            {
+                currentCells[r][c] = map[r][c];
+                drawOneSquare(r,c,COLORS[map[r][c]]);
+            }
+            else
+            {
+                currentCells[r][c] = CLEAR_COLOR;
+                drawOneSquare(r,c,COLORS[CLEAR_COLOR])
+            }
+        }
+    }
+}
+
+
+// Toggles the existance of a wall in a particular location
+function toggle_wall(row,col)
+{
+	if (currentCells[row][col] != ROBOT_COLOR);
+	{
+		if (currentCells[row][col] != WALL_COLOR)
+			updateCellColor(row,col,WALL_COLOR);
+		else if (currentCells[row][col] == WALL_COLOR)
+			updateCellColor(row,col,CLEAR_COLOR);
+	}
+        clearVisited();
+}
+
+// counts any particular type of square in a map
+function countSquares( m, colorIndex )
+{
+    var total = 0;
+
+    for (var r = 0 ; r < MAXROWS ; ++r)
+    {
+        for (var c = 0 ; c < MAXCOLS ; ++c)
+        {
+            if (m[r][c] == colorIndex)
+            {
+                ++total;
+            }
+        }
+    }
+    return total;
+}
+
+// clears the map of all visitted cells
+function clearVisited()
+{
+    for (var r = 0 ; r < MAXROWS ; ++r)
+    {
+        for (var c = 0 ; c < MAXCOLS ; ++c)
+        {
+            if (currentCells[r][c] == VISITED_COLOR)
+            {
+                currentCells[r][c] = CLEAR_COLOR;
+                drawOneSquare(r,c,COLORS[CLEAR_COLOR]);
+            }
+        }
+    }
+	cookies = [];
+    cookies_remaining = MAXCOOKIES;
+	updateProgress;
+}
+
+// blanks the map and resets the robot
+function fullReset()
+{
+    for (var r = 0 ; r < MAXROWS ; ++r)
+    {
+        for (var c = 0 ; c < MAXCOLS ; ++c)
+        {
+            if (currentCells[r][c] == VISITED_COLOR || currentCells[r][c] == ROBOT_COLOR
+                          || currentCells[r][c] == ERROR_COLOR || currentCells[r][c] == COOKIE_COLOR)
+            {
+                currentCells[r][c] = CLEAR_COLOR;
+                drawOneSquare(r,c,COLORS[CLEAR_COLOR]);
+            }
+        }
+    }
+    resetBot();
+}
+
+
+// global variable for current rules
+// RULES[state] is a mapping from one of the 16 'NEWS'-'xxxx' strings
+//   to a direction to move and a new state to enter (or other activity)
+var RULES = Array(); // supposedly will expand to fit!
+var MAXRULES = 100;
+
+// initialize the rules to a good size
+for (rulenum=0 ; rulenum<MAXRULES ; ++rulenum)
+{
+	RULES[rulenum] = Array();
+}
+
+// global robot
+var robot =  {row: 0, col: 0, state: 0};
+// global cookies
+var cookies = []
+
+XXXX = 0
+NXXX = 1
+XEXX = 2
+NEXX = 3
+XXXS = 4
+NXXS = 5
+XEXS = 6
+NEXS = 7
+XXWX = 8
+NXWX = 9
+XEWX = 10
+NEWX = 11
+XXWS = 12
+NXWS = 13
+XEWS = 14
+NEWS = 15
+
+COOKIE = 16
+
+var SURR_TEXT = ["xxxx", "Nxxx", "xExx", "NExx", "xxxS", "NxxS", 
+                 "xExS", "NExS", "xxWx", "NxWx", "xEWx", "NEWx",
+				 "xxWS", "NxWS", "xEWS", "NEWS",
+				 "xxxx", "Nxxx", "xExx", "NExx", "xxxS", "NxxS", 
+                 "xExS", "NExS", "xxWx", "NxWx", "xEWx", "NEWx",
+				 "xxWS", "NxWS", "xEWS", "NEWS"]
+
+MOVE_X = 0 // don't move at all - better change state!
+MOVE_N = 1
+MOVE_E = 2
+MOVE_W = 3
+MOVE_S = 4
+
+OTHER = 0 // other actions
+
+// we'll make our own rules for now
+RULE_DIR = 0;
+RULE_NEWSTATE = 1;
+RULE_OTHERACTION = 2;
+RULE_LINENUM = 3;
+RULE_TEXT = 4;
+RULE_COOKIE = 5; // index of the string the user typed
+
+
+function cookieLocation(row,col)
+{
+	return col + MAXCOLS*row;
+}
+
+function drawCookies()
+{
+	var the_cookie = 0
+	var r = 0
+	var c = 0
+	for (var i=0; i<cookies.length; i++)
+	{
+		the_cookie = cookies[i]
+		c = the_cookie % MAXCOLS;
+		r = (the_cookie - c)/MAXCOLS;	
+		updateCellColor(r,c,COOKIE_COLOR);
+	}
+}
+
+function randomInRange(N)
+{
+	return Math.floor(N*Math.random())
+}
+
+function resetBot()
+{
+	var nrow;
+	var ncol;
+	found = false
+	while(!found)
+	{
+		nrow = randomInRange(MAXROWS)
+		ncol = randomInRange(MAXCOLS)
+		if(currentCells[nrow][ncol] != WALL_COLOR)
+			found = true
+	}
+	robot = {row: nrow, col: ncol, state: 0};
+	drawOneSquare( robot.row, robot.col, COLORS[ROBOT_COLOR] );
+	currentCells[robot.row][robot.col] = ROBOT_COLOR;
+
+	// re-update the squares to go...
+	document.getElementById('state').value = "0";
+	document.getElementById('surroundings').value = SURR_TEXT[getSurroundings()];
+	cookies = [];
+    cookies_remaining = MAXCOOKIES;
+	updateProgress();
+}
+
+function teleportRobot(direction)
+{
+// will move the robot if it's legal to...
+// will not mark the space moved from as grey, but clear
+//
+// direction must be 'W', 'E', 'N', or 'S' to move
+
+	// get robot's current position
+	var r = robot.row;
+	var c = robot.col;
+
+	var msgText = "";
+
+      
+        
+	if (direction == 'W')
+	{ 
+		// check if it's safe to move...
+		if (isWallToW(r,c))
+		{
+			msgText = "There is a wall to the west.\nNot moving the robot.";
+		}
+		else
+		{
+			// clear previous location
+			updateCellColor(robot.row,robot.col,CLEAR_COLOR);
+			// move it west
+			robot.col = robot.col-1;
+		}
+	}
+	
+	else if (direction == 'E')
+	{ 
+		// check if it's safe to move...
+		if (isWallToE(r,c))
+		{
+			msgText = "There is a wall to the east.\nNot moving the robot.";
+		}
+		else
+		{
+			// clear previous location
+			updateCellColor(robot.row,robot.col,CLEAR_COLOR)
+			// move it west
+			robot.col = robot.col+1;
+		}
+	}
+	else if (direction == 'N')
+	{ 
+		// check if it's safe to move...
+		if (isWallToN(r,c))
+		{
+			msgText = "There is a wall to the north.\nNot moving the robot.";
+		}
+		else
+		{
+			// clear previous location
+			updateCellColor(robot.row,robot.col,CLEAR_COLOR);
+			// move it west
+			robot.row = robot.row-1;
+		}
+	}
+	else if (direction == 'S')
+	{ 
+		// check if it's safe to move...
+		if (isWallToS(r,c))
+		{
+			msgText = "There is a wall to the south.\nNot moving the robot.";
+		}
+		else
+		{
+			// clear previous location
+			updateCellColor(robot.row,robot.col,CLEAR_COLOR);
+			// move it west
+			robot.row = robot.row+1;
+		}
+	}
+	
+	
+	// clear the cheated map
+	clearVisited();
+	// and draw cookies!
+	drawCookies();
+	// don't forget to draw the robot on top...
+	updateCellColor(robot.row,robot.col,ROBOT_COLOR);
+	// change the status tag
+	document.getElementById('surroundings').value = SURR_TEXT[getSurroundings()];
+	// print any messages
+	document.getElementById('mesg').value = msgText;	 
+
+}
+
+
+function moveRobot(rule)
+{
+	var dir = rule[RULE_DIR];
+	//alert('dir is' + dir)
+	var newstate = rule[RULE_NEWSTATE];
+	var newrow = robot.row;
+	var newcol = robot.col;
+	var r = newrow;
+	var c = newcol;
+	
+	// Deal with cookies before we move!
+	var cookieAction = rule[RULE_COOKIE];
+	if (cookieAction == 1)
+	{
+        if (cookies_remaining > 0)
+        {
+            cookies_remaining += -1;
+            cookies.push(cookieLocation(robot.row,robot.col));
+        }
+        else
+            return "No more cookies. Stopping."
+	}
+    if (cookieAction == 2)
+    {
+        cookieIndexInList = cookies.indexOf(cookieLocation(r,c))
+        if (cookieIndexInList == -1)
+            return "There is no cookie here! You cannot pull cookies out of thin air!"
+        else
+        {
+            cookies_remaining += 1;
+            cookies.splice(cookieIndexInList,1)
+        }
+    }
+	
+	if (dir == MOVE_X) ;  // do not move at all
+	else if (dir == MOVE_N)
+	{
+		if (!isWallToN(r,c)) newrow -= 1;
+		else return "Can not move to the north!";
+	}
+	else if (dir == MOVE_E)
+	{
+		if (!isWallToE(r,c)) newcol += 1;
+		else return "Can not move to the east!";
+	}
+	else if (dir == MOVE_W)
+	{
+		if (!isWallToW(r,c)) newcol -= 1;
+		else return "Can not move to the west!";
+	}
+	else if (dir == MOVE_S)
+	{
+		if (!isWallToS(r,c)) newrow += 1;
+		else return "Can not move to the south!";
+	}
+	else return 'Direction of ' + dir + ' not recognized.';
+
+	// check that it's not a wall or out of bounds...
+	// we return a nonempty message if we are and
+	// an empty string if everything is OK
+
+	if (newcol < 0) return 'Trying to move to col -1! Stopping';
+	if (newcol >= MAXCOLS) return 'Trying to move to col " + MAXCOLS + "! Stopping';
+	if (newrow < 0) return 'Trying to move to row -1! Stopping';
+	if (newrow >= MAXROWS) return 'Trying to move to row " + MAXROWS + "! Stopping';
+
+	// now update the data structure and the display
+	updateCellColor(robot.row,robot.col,VISITED_COLOR);
+	robot.row = newrow;
+	robot.col = newcol;
+	drawCookies();
+	updateCellColor(robot.row,robot.col,ROBOT_COLOR);
+
+	// now update the state of the robot
+	robot.state = newstate;
+
+	if (DEBUG) return 'Robot is ' + robot;
+	else return ''; // everything is OK
+
+}
+
+function isWallToN(r,c)
+{
+	var CC = currentCells;
+	//alert('r and c are ' + r + ' '  + c )
+	if (r == 0 || CC[r-1][c] == WALL_COLOR ) return 1;
+	return 0
+}
+
+function isWallToE(r,c)
+{
+	var CC = currentCells;
+	if (c == MAXCOLS-1 || CC[r][c+1] == WALL_COLOR ) return 1;
+	return 0
+}
+
+function isWallToW(r,c)
+{
+	var CC = currentCells;
+	if (c == 0 || CC[r][c-1] == WALL_COLOR ) return 1;
+	return 0
+}
+
+function isWallToS(r,c)
+{
+	var CC = currentCells;
+	if (r == MAXROWS-1 || CC[r+1][c] == WALL_COLOR ) return 1;
+	return 0
+}
+
+function getSurroundings()
+{
+	// look at the currentCells array and robot to 
+	// see what's around us!
+	// should make sure that we're in bounds!
+	// check to the N
+	var r = robot.row;
+	var c = robot.col;
+	
+	if (cookies.indexOf(cookieLocation(r,c)) != -1)
+		if (isWallToN(r,c)) // YES N
+			if (isWallToE(r,c)) // YES E
+				if (isWallToW(r,c)) // YES W
+					if (isWallToS(r,c)) // YES S
+						return NEWS + COOKIE;
+					else // NO S
+						return NEWX + COOKIE;
+				else // NO W
+					if (isWallToS(r,c)) // YES S
+						return NEXS + COOKIE;
+					else // NO S
+						return NEXX + COOKIE;
+			else // NO E
+				if (isWallToW(r,c)) // YES W
+					if (isWallToS(r,c)) // YES S
+						return NXWS + COOKIE;
+					else // NO S
+						return NXWX + COOKIE;
+				else // NO W
+					if (isWallToS(r,c)) // YES S
+						return NXXS + COOKIE;
+					else // NO S
+						return NXXX + COOKIE;
+		else // NO N
+			if (isWallToE(r,c)) // YES E
+				if (isWallToW(r,c)) // YES W
+					if (isWallToS(r,c)) // YES S
+						return XEWS + COOKIE;
+					else // NO S
+						return XEWX + COOKIE;
+				else // NO W
+					if (isWallToS(r,c)) // YES S
+						return XEXS + COOKIE;
+					else // NO S
+						return XEXX + COOKIE;
+			else // NO E
+				if (isWallToW(r,c)) // YES W
+					if (isWallToS(r,c)) // YES S
+						return XXWS + COOKIE;
+					else // NO S
+						return XXWX + COOKIE;
+				else // NO W
+					if (isWallToS(r,c)) // YES S
+						return XXXS + COOKIE;
+					else // NO S
+						return XXXX + COOKIE;
+						
+	else
+		if (isWallToN(r,c)) // YES N
+			if (isWallToE(r,c)) // YES E
+				if (isWallToW(r,c)) // YES W
+					if (isWallToS(r,c)) // YES S
+						return NEWS;
+					else // NO S
+						return NEWX;
+				else // NO W
+					if (isWallToS(r,c)) // YES S
+						return NEXS;
+					else // NO S
+						return NEXX;
+			else // NO E
+				if (isWallToW(r,c)) // YES W
+					if (isWallToS(r,c)) // YES S
+						return NXWS;
+					else // NO S
+						return NXWX;
+				else // NO W
+					if (isWallToS(r,c)) // YES S
+						return NXXS;
+					else // NO S
+						return NXXX;
+		else // NO N
+			if (isWallToE(r,c)) // YES E
+				if (isWallToW(r,c)) // YES W
+					if (isWallToS(r,c)) // YES S
+						return XEWS;
+					else // NO S
+						return XEWX;
+				else // NO W
+					if (isWallToS(r,c)) // YES S
+						return XEXS;
+					else // NO S
+						return XEXX;
+			else // NO E
+				if (isWallToW(r,c)) // YES W
+					if (isWallToS(r,c)) // YES S
+						return XXWS;
+					else // NO S
+						return XXWX;
+				else // NO W
+					if (isWallToS(r,c)) // YES S
+						return XXXS;
+					else // NO S
+						return XXXX;
+}
+
+
+function update()
+{
+	// what is the rule
+	// it's the current robot's state and surr
+	var currentstate = robot.state;
+	var surr = getSurroundings();
+	rule = RULES[currentstate][surr]
+	var ruleText = "";
+	var mesgText = "";
+   
+	if (!(rule))
+	{
+		ruleText = "none";
+		mesgText = mesgText + "\n" + "No rule for state " + 
+		currentstate + " and surr " + SURR_TEXT[surr] +
+		"\nStopping."
+	}
+	else
+	{ 
+		// get the parts of the rule needed to move the robot
+		mesgText = mesgText + moveRobot(rule) + "\n";
+		ruleText = rule[RULE_TEXT];
+	}
+
+	// set the current (== previous) rule
+	document.getElementById('currentrule').value = ruleText;
+
+	// do it again to get the _next_ rule
+
+	currentstate = robot.state;
+	surr = getSurroundings();
+	var newrule = RULES[currentstate][surr];
+	var newruletext = "";
+
+
+	if (!(newrule))
+	{
+		newruleText = "none";
+	}
+	else
+	{ 
+		// get the parts of the rule needed to move the robot
+		//reply = moveRobot(newrule);
+		newruleText = '' + newrule[RULE_TEXT];
+	}
+
+	// set the next rule
+	document.getElementById('mesg').value = mesgText;
+	document.getElementById('nextrule').value = newruleText;
+	document.getElementById('state').value = currentstate;
+	document.getElementById('surroundings').value = SURR_TEXT[surr];
+	updateProgress();
+   
+}
+
+
+var timerID = null
+
+function go()
+{
+	clearInterval(timerID);
+	timerID=setInterval("update()",TIMING_DELAY);
+}
+
+function stop()
+{
+	clearInterval(timerID);
+}
+
+function removeEmptyStrings(arr)
+{
+	// returns an array without empty strings
+	var newarr = Array()
+	var n = 0 // location for next element of newarr
+	for (var i=0 ; i<arr.length ; ++i)
+	{
+		if (arr[i] != '') newarr[n++] = arr[i]
+	} 
+	return newarr
+}
+
+function addToList(sL,n)
+{
+	// append all of the ints in sL (with n added) to sL
+	var L = sL.length;
+	for (var i=0 ; i<L ; ++i)
+	{
+		sL[L+i] = sL[i] + n;
+	}
+	return sL
+}
+
+function computeSurrFromString(surrStr)
+{
+	// must be length 4
+	if (surrStr.length != 4) return -1; // ERROR
+	// check first char: must be N, x, X, or *
+	var nc = surrStr.charAt(0);
+	if (nc != 'N' && nc != 'X' && nc != '*') return -1; //ERROR
+	var ec = surrStr.charAt(1);
+	if (ec != 'E' && ec != 'X' && ec != '*') return -1; //ERROR
+	var wc = surrStr.charAt(2);
+	if (wc != 'W' && wc != 'X' && wc != '*') return -1; //ERROR
+	var sc = surrStr.charAt(3);
+	if (sc != 'S' && sc != 'X' && sc != '*') return -1; //ERROR
+	
+	// everything is OK, we prepare the list of integers
+	// to return - this is the list of surroundings matched
+	// by the input surrStr
+	surroundingsList = Array();
+	var i = 0; // next element in surroundingsList
+	// base value
+	var base = (nc == 'N') + 2*(ec == 'E') + 4*(sc == 'S') + 8*(wc == 'W');
+	// add them into the list
+	surroundingsList[i++] = base;
+	if (nc == '*') surroundingsList = addToList(surroundingsList,1) 
+	if (ec == '*') surroundingsList = addToList(surroundingsList,2) 
+	if (wc == '*') surroundingsList = addToList(surroundingsList,8) 
+	if (sc == '*') surroundingsList = addToList(surroundingsList,4) 
+	return surroundingsList
+}
+
+function computeCookieSeeFromString(cookieSeeStr)
+{
+	if (cookieSeeStr == '*' || cookieSeeStr == '*M') return 0;
+	if (cookieSeeStr == 'XM') return 1;
+	if (cookieSeeStr == 'M' || cookieSeeStr == 'WM') return 2;
+	else return -1;
+}
+
+function computeCookieDoFromString(cookieSeeStr)
+{
+	if (cookieSeeStr == '*') return 0;
+	if (cookieSeeStr == 'DM') return 1;
+	if (cookieSeeStr == 'PM') return 2;
+	else return -1;
+}
+
+function clearRules()
+{
+	var maxstates = RULES.length;
+	for (var statenum=0 ; statenum<maxstates ; ++statenum)
+	{
+		RULES[statenum] = Array(); // gone!
+		// does java script have garbage collection? I hope so!
+		// Yes, it does!
+	}
+}
+
+function checkAndSetNewRule(state,surrList,move,cookieAction,newstate,linenum,ruleStr)
+{
+    var reply = '';
+    var message = '';
+
+    // for each element of surr
+    var L = surrList.length;
+    for (var i=0 ; i<L ; ++i)
+    {
+        var surr = surrList[i];
+        if (!(RULES[state][surr]))
+        {
+            if (DEBUG) reply += "No repeat rule. state:" + state + "  surr:" + surr + "\n";
+            // it's OK, so set the rule (no action yet)
+            RULES[state][surr] = [ move, newstate, OTHER, linenum, ruleStr, cookieAction ]; 
+        }
+        else
+        {
+            reply += "Repeat Rule! The state: " + state + "  surr: " + SURR_TEXT[surr] +
+                "\n   was already handled on line #" + RULES[state][surr][3] +
+                "\n   which reads as follows:" + 
+                "\n   " + RULES[state][surr][4] + "\n";
+            return reply;
+        }
+    }
+
+    return reply;
+}
+
+function computeRules(s)
+{
+
+	// convert tabs to spaces
+	// given that this is a browser, it's not clear
+	// how you would even enter a tab, but anyway...
+	s = s.replace('	',' ');
+
+	// we should clear out the rules here...
+	clearRules();
+
+	// here are all of the typed rules, line-by-line
+	var allRules = s.split('\n');
+	var numberOfLines = allRules.length;
+	var returnmessage = '';
+
+
+	// loop through them all...
+	for (var linenum=0 ; linenum<numberOfLines ; ++linenum)
+	{
+		// the current rule == the current line's string
+		var ruleStr = String(allRules[linenum]);
+		returnmessage = "Oops...\n\nOn line number " + linenum + ", which is this:\n   " + ruleStr + "\n\n";
+
+		// on IE we need to remove the '\r' at the end - this is weird!
+		var L = ruleStr.length;
+		if ( ruleStr.indexOf('\r') != -1 )
+		{
+			ruleStr = ruleStr.substring(0,ruleStr.indexOf('\r')); // get rid of the \r
+		}
+
+		// throw out anything at or after the first # (commenting...)
+		var locationOfComment = ruleStr.indexOf('#');
+		if (locationOfComment != -1)   // there _was_ a comment
+		{
+			ruleStr = ruleStr.substring(0,locationOfComment);
+		}
+
+		// make the whole thing uppercase
+		ruleStr = ruleStr.toUpperCase();
+
+		// tokenize on spaces into the list s
+		var s = ruleStr.split(' '); 
+		s = removeEmptyStrings(s);
+		// blank lines are OK, but partial lines are not
+		if (s.length == 0) continue;  // ignore lines with no tokens
+		if (s.length < 5)
+		{
+			returnmessage += "There are too few tokens with only " + s.length + 
+			" seen.\n\n  5 are needed, in the form\n " +
+			" State Surr -> Move NewState";
+			return returnmessage;
+		}
+		else if (s.length > 5)
+		{
+			returnmessage += "There are too many tokens with " + s.length + 
+			" seen.\n\n  5 are needed, in the form\n " +
+			" State Surr -> Move NewState";
+			return returnmessage;
+		}
+		
+		//////////////////////////////////////////////////////////////////////////////////////////////////
+		// check stateStr
+		var stateStr = s[0]
+		var state = parseInt(stateStr)
+		if (!(state>=0 && state<MAXRULES)) state = -1;
+		if (state == -1) 
+		{
+			returnmessage += "The first token, representing the input state, was not an integer" +
+			" between 0 and " + (MAXRULES-1) + " (inclusive).";
+			return returnmessage;
+		}
+		//////////////////////////////////////////////////////////////////////////////////////////////////
+		
+		
+		//////////////////////////////////////////////////////////////////////////////////////////////////
+		// check surrStr
+		var surrStr = s[1]
+		var surr = computeSurrFromString(surrStr)
+
+		if (surr == -1)
+		{
+			returnmessage += "The second token, representing the \"NEWS\" surroundings,\n  was not in" +
+			" a recognized format. It should be\n  from xxxx to NEWS, with *s allowed.";
+			return returnmessage;
+		}
+		// now surr is a list of the appropriate surroundings...
+		// we should check against our rule base to see if s/t is
+		// defined twice...
+		// but we wait to do this until everything has parsed all right...
+		//////////////////////////////////////////////////////////////////////////////////////////////////
+        
+		
+		//////////////////////////////////////////////////////////////////////////////////////////////////
+		// Check whether to do anything if we are on a cookie
+		// If we were on an arrow, then we don't care about cookies so insert a *
+		var cookieSeeStr = s[2];
+		if (cookieSeeStr == "->")
+		{
+			s.splice(2,0,'*');
+			cookieSeeStr = s[2];
+		}
+		if (cookieSeeStr == "-")
+		{
+			returnmessage += "It seems you have a dash - instead of an arrow ->\n" + 
+			" Perhaps there's a space between the - and the >\n" +
+			" Be sure your rule is in the form\n" + 
+			" State Surr -> Move NewState";
+			return returnmessage;
+		}
+		var cookieSee = computeCookieSeeFromString(cookieSeeStr);
+		if (cookieSee == -1)
+		{
+			returnmessage += "This middle token should be an arrow: ->\n\nInstead, it was " + s[2] +
+			"\n\n" + " Be sure your rule is in the form\n" + 
+			" State Surr -> Move NewState";
+			return returnmessage;
+		}
+		else if (cookieSee == 0)
+		{
+			surr = addToList(surr,16)
+		}
+		else if (cookieSee == 2)
+		{
+			surr = surr.map(function(item) { return item+16; });
+		}
+		//////////////////////////////////////////////////////////////////////////////////////////////////
+
+		
+		//////////////////////////////////////////////////////////////////////////////////////////////////
+		// Not all that important...
+		var arrowStr = s[3];
+		if (arrowStr != "->")
+		{
+			returnmessage += "This middle token should be an arrow: ->\n\nInstead, it was " + s[2] +
+			"\n\n" + " Be sure your rule is in the form\n" + 
+			" State Surr -> Move NewState";
+			return returnmessage;
+		}
+		//////////////////////////////////////////////////////////////////////////////////////////////////
+		
+		
+		//////////////////////////////////////////////////////////////////////////////////////////////////
+		// Check what we should do to the cookie
+		// If we reach a direction command, clearly we will do nothing to the cookie
+		var cookieDoStr = s[4];
+		if ((cookieDoStr == 'N') || (cookieDoStr == 'E') || (cookieDoStr == 'S') || (cookieDoStr == 'W') || (cookieDoStr == 'X'))
+		{
+			s.splice(4,0,'*');
+			cookieDoStr = s[4];
+		}
+		var cookieDo = computeCookieDoFromString(cookieDoStr);
+		if (cookieDo == -1)
+		{
+			returnmessage += ":-) The token representing the movement direction" + 
+			" should be one of these: N, E, W, S, or X." + 
+			"\n\n" + " Rather, the token was " + String(cookieDoStr);
+			return returnmessage;
+		}
+		//////////////////////////////////////////////////////////////////////////////////////////////////
+		
+		
+		//////////////////////////////////////////////////////////////////////////////////////////////////
+		// better be one of the five possibilities (so far)
+		var dirStr = s[5]
+		//return dirStr.length;
+		if (dirStr.length != 1)
+		{
+			returnmessage += ":-) The token representing the movement direction" + 
+			" should be only 1 character long: N, E, W, S, or X." + 
+			"\n\n" + " Rather, the token was " + String(dirStr) + " with length " +
+			String(dirStr.length);
+			return returnmessage;
+		}
+		var dc = dirStr.charAt(0);
+		if (dc != 'N' && dc != 'E' && dc != 'W' && dc != 'S' && dc != 'X')
+		{
+			returnmessage += "The token representing the movement direction" + 
+			" should be one of N, E, W, S, or X." +
+			"\n\n" + " Rather, the token was " + dirStr;
+			return returnmessage;
+		}
+		var dir = 0;
+		if (dc == 'N') dir = MOVE_N;
+		if (dc == 'E') dir = MOVE_E;
+		if (dc == 'W') dir = MOVE_W;
+		if (dc == 'S') dir = MOVE_S;
+		if (dc == 'X') dir = MOVE_X;
+		//////////////////////////////////////////////////////////////////////////////////////////////////
+		
+		
+		//////////////////////////////////////////////////////////////////////////////////////////////////
+		// check the new state
+		var newstateStr = s[6];
+		var newstate = parseInt(newstateStr)
+		if (!(newstate>=0 && newstate<MAXRULES)) newstate = -1;
+		if (newstate == -1) 
+		{
+			returnmessage += "The last token, representing the output state, was not an integer" +
+			" between 0 and " + MAXRULES + " (inclusive).";
+			return returnmessage;
+		}
+		//////////////////////////////////////////////////////////////////////////////////////////////////
+		
+
+		// now check the rule for possible repeats -- or other things
+		var reply = checkAndSetNewRule(state,surr,dir,cookieDo,newstate,linenum,ruleStr);
+		if (reply != '')
+		{
+		// then it was an error message
+			returnmessage += reply;
+			if (DEBUG) returnmessage += "\n\n"; // keep accumulating information if we're debugging
+			else return returnmessage;
+		}
+
+	}
+
+	//return '' + state + ' ' + surrStr + ' ' + arrowStr + ' ' + dirStr + ' ' + newstate;
+	if (DEBUG) return returnmessage; // show accumulated information, if we're debugging
+	else return 'OK';
+
+}
+
+function updateProgress()
+{
+  var total = countSquares( currentCells, CLEAR_COLOR );
+  document.getElementById('progress').value = total;
+  if (total == 0) {
+    stop();
+    document.getElementById('mesg').value = "\n** Complete ! **";
+  } // end if done with environment
+}
+
+
+
+var currentMapIndex = 6;
+var MAPS = [emptymap, mazemap, diamondmap, map3, map4, map5, map6];
+
+function getCMI()
+{
+  return currentMapIndex;
+}
+
+function changeMap(value)
+{
+    currentMapIndex += value;
+    if (currentMapIndex >= MAPS.length)
+	{
+        currentMapIndex = 0;
+    }
+	else if (currentMapIndex < 0)
+	{
+		currentMapIndex = MAPS.length - 1;
+	}
+    
+    // now do stuff to get the page ready to go...
+    
+    // draw the map!
+    //alert('currentMapIndex is ' + currentMapIndex);
+    drawMap( MAPS[currentMapIndex] ); // sets currentCells, too!
+    
+    // set and draw the robot
+    resetBot();
+    
+    // compute the rules (the default rules at the start)
+    document.calc.mesg.value = computeRules(document.calc.rules.value);
+    
+    // fill in the various text fields
+    document.getElementById('state').value = "0";
+    document.getElementById('surroundings').value = SURR_TEXT[getSurroundings()];
+    updateProgress();
+}
+
+changeMap(1);
+
+
+} catch(e) {
+for (var i in e)
+	alert(e[i]);
+}
+
+
+</script> 
+
+<br><br>
+
+
+
+
+</body></html>
