@@ -23,3 +23,4 @@ Dictionary = ['a', 'am', 'at', 'apple', 'bat', 'bar', 'babble', 'can', 'foo',
               'spam', 'spammy', 'zzyzva']
 
 # Implement your functions here.
+x=input("hello")
