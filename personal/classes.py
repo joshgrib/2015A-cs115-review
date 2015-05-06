@@ -9,7 +9,7 @@ class Dog:
 
     def add_trick(self, trick):
         self.tricks.append(trick)
-        print "Added '%s' to dog '%s'" %(trick,self.name)
+        print "Added trick '%s' to dog '%s'" %(trick,self.name)
 
 jeff = Dog("Jeff")
 print jeff.kind
